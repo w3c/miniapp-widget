@@ -156,35 +156,35 @@
           <span its-locale-filter-list="zh-hans" lang="zh-hans">宿主环境</span>
         </h2>
         <p its-locale-filter-list="en" lang="en">
-          The MiniApp Widget runs in a host environment that is called the user agent. The MiniApp Widget user agent is largely the same as the MiniApp user agent, and shall meet the following requirements:
+          The MiniApp Widget runs in a host environment that is called the <a href="https://w3c.github.io/miniapp-packaging/#dfn-useragent">user agent</a>. The MiniApp Widget user agent is largely the same as the MiniApp user agent, and shall meet the following requirements:
         </p>
         <p its-locale-filter-list="zh-hans" lang="zh-hans">
-          MiniApp Widget 需要在一个宿主环境中运行，这个环境被称为 user agent。MiniApp Widget 的 user agent 在较大程度下与 MiniApp 的 user agent 保持一致，应该满足如下一些需求：
+          MiniApp Widget 需要在一个宿主环境中运行，这个环境被称为 <a href="https://w3c.github.io/miniapp-packaging/#dfn-useragent">user agent</a>。MiniApp Widget 的 user agent 在较大程度下与 MiniApp 的 user agent 保持一致，应该满足如下一些需求：
         </p>
 
         <ol>
           <li>
             <p its-locale-filter-list="en" lang="en">
-              The MiniApp Widget user agent should be able to parse the MiniApp URI and obtain the MiniApp package according to the process described in the <a href="https://w3c.github.io/miniapp/specs/uri/">MiniApp URI Scheme</a>, and it shall conform to the requirements in the <a href="https://w3c.github.io/miniapp/specs/uri/#dereferencing">Dereferencing</a> section of the <a href="https://w3c.github.io/miniapp/specs/uri/">MiniApp URI Scheme</a> specification.
+              The MiniApp Widget user agent should be able to parse the MiniApp URI and obtain the MiniApp package according to the process described in the <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> specification, and it shall conform to the requirements in the <a href="https://w3c.github.io/miniapp-addressing/#dereferencing">Dereferencing</a> section of the <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> specification.
             </p>
             <p its-locale-filter-list="zh-hans" lang="zh-hans">
-              MiniApp Widget 的 user agent 应当能根据 <a href="https://w3c.github.io/miniapp/specs/uri/">MiniApp URI 规范</a>中描述的过程解析 MiniApp URI 并获取 MiniApp 包，该过程应当符合 <a href="https://w3c.github.io/miniapp/specs/uri/">MiniApp URI 规范</a>中<a href="https://w3c.github.io/miniapp/specs/uri/#dereferencing">解引用</a>一节描述。
+              MiniApp Widget 的 user agent 应当能根据 <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> 规范中描述的过程解析 MiniApp URI 并获取 MiniApp 包，该过程应当符合 <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> 规范中<a href="https://w3c.github.io/miniapp-addressing/#dereferencing">解引用</a>一节描述。
             </p>
           </li>
           <li>
             <p its-locale-filter-list="en" lang="en">
-              The user agent should be able to parse the structure of the MiniApp package as described in the <a href="https://w3c.github.io/miniapp/specs/packaging/">MiniApp Packaging specification</a>.
+              The user agent should be able to parse the structure of the MiniApp package as described in the <a href="https://w3c.github.io/miniapp-packaging/">MiniApp Packaging</a> specification.
             </p>
             <p its-locale-filter-list="zh-hans" lang="zh-hans">
-              User agent 应当能按照 <a href="https://w3c.github.io/miniapp/specs/packaging/">MiniApp Packaging 规范</a>的描述解析 MiniApp 包结构。
+              User agent 应当能按照 <a href="https://w3c.github.io/miniapp-packaging/">MiniApp Packaging</a> 规范的描述解析 MiniApp 包结构。
             </p>
           </li>
           <li>
             <p its-locale-filter-list="en" lang="en">
-              The user agent should be able to parse the manifest file as described in the <a href="https://w3c.github.io/miniapp/specs/manifest/">MiniApp Manifest specification</a>, so as to load and run the MiniApp Widget. Some specific requirements related to the Widget are described in the Manifest File section of this document.
+              The user agent should be able to parse the manifest file as described in the <a href="https://w3c.github.io/miniapp-manifest/">MiniApp Manifest</a> specification, so as to load and run the MiniApp Widget. Some specific requirements related to the Widget are described in the Manifest File section of this document.
             </p>
             <p its-locale-filter-list="zh-hans" lang="zh-hans">
-              User agent 应当能按照 <a href="https://w3c.github.io/miniapp/specs/manifest/">MiniApp Manifest 规范</a>的描述解析 manifest 文件，以加载运行 MiniApp Widget。在本文档的 Manifest 文件一节中描述了一些与 Widget 相关的特定需求。
+              User agent 应当能按照 <a href="https://w3c.github.io/miniapp-manifest/">MiniApp Manifest</a> 规范的描述解析 manifest 文件，以加载运行 MiniApp Widget。在本文档的 Manifest 文件一节中描述了一些与 Widget 相关的特定需求。
             </p>
           </li>
           <li>
@@ -242,13 +242,13 @@
 
       </section>
 
-      <section id="uri">
+      <section id="addressing">
         <h2>URI</h2>
         <p its-locale-filter-list="en" lang="en">
-          The MiniApp Widget URI should be consistent with the <a href="https://w3c.github.io/miniapp/specs/uri/">MiniApp URI Scheme</a>, to ensure that:
+          The MiniApp Widget URI should be consistent with the <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> specification, to ensure that:
         </p>
         <p its-locale-filter-list="zh-hans" lang="zh-hans">
-          MiniApp Widget 的 URI 规范应该与 <a href="https://w3c.github.io/miniapp/specs/uri/">MiniApp URI 规范</a>保持一致，以确保：
+          MiniApp Widget 的 URI 规范应该与 <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> 规范保持一致，以确保：
         </p>
 
         <ol>
@@ -277,10 +277,10 @@
           <span its-locale-filter-list="zh-hans" lang="zh-hans">包</span>
         </h2>
         <p its-locale-filter-list="en" lang="en">
-          Like MiniApp, the MiniApp Widget is also distributed in the form of a package. After the user agent acquires and verifies a MiniApp package, it will acquire the Widget information contained in the package, and load and display it correctly. The form and specification of the package should be consistent with the <a href="https://w3c.github.io/miniapp/specs/packaging/">MiniApp Packaging specification</a>, including but not limited to file organization, compression format, filename extension, digital signature, etc. The user agent should use the same form to verify and install the MiniApp Widget package.
+          Like MiniApp, the MiniApp Widget is also distributed in the form of a package. After the user agent acquires and verifies a MiniApp package, it will acquire the Widget information contained in the package, and load and display it correctly. The form and specification of the package should be consistent with the <a href="https://w3c.github.io/miniapp-packaging/">MiniApp Packaging</a> specification, including but not limited to file organization, compression format, filename extension, digital signature, etc. The user agent should use the same form to verify and install the MiniApp Widget package.
         </p>
         <p its-locale-filter-list="zh-hans" lang="zh-hans">
-          与 MiniApp 保持一致，MiniApp Widget 同样以包的形式分发，User agent 获取到 MiniApp 包并进行校验后，获取包中包含的Widget信息，并正确地加载和显示。包的形式和规范应当与 <a href="https://w3c.github.io/miniapp/specs/packaging/">MiniApp Packaging 规范</a> 保持一致。包括不限于文件组织形式、压缩格式、文件后缀名、数字签名等。User agent 会以同样的形式对 MiniApp Widget 的包进行校验、安装等过程。
+          与 MiniApp 保持一致，MiniApp Widget 同样以包的形式分发，User agent 获取到 MiniApp 包并进行校验后，获取包中包含的Widget信息，并正确地加载和显示。包的形式和规范应当与 <a href="https://w3c.github.io/miniapp-packaging/">MiniApp Packaging</a> 规范保持一致。包括不限于文件组织形式、压缩格式、文件后缀名、数字签名等。User agent 会以同样的形式对 MiniApp Widget 的包进行校验、安装等过程。
         </p>
         <p its-locale-filter-list="en" lang="en">
           In the MiniApp Widget scenario, the specific requirements are as follows:
@@ -314,10 +314,10 @@
           <span its-locale-filter-list="zh-hans" lang="zh-hans">Manifest 文件</span>
         </h2>
         <p its-locale-filter-list="en" lang="en">
-          The configuration file must be included in the MiniApp Widget package. Developers can set the basic information, style, and routing of the Widget through the Manifest file. The format of the Widget Manifest file should be          consistent with that of the <a href="https://w3c.github.io/miniapp/specs/manifest/">MiniApp Manifest file</a>. Specifically, there will be some changes in the Widget environment.
+          The configuration file must be included in the MiniApp Widget package. Developers can set the basic information, style, and routing of the Widget through the Manifest file. The format of the Widget Manifest file should be          consistent with that of the <a href="https://w3c.github.io/miniapp-manifest/">MiniApp Manifest file</a>. Specifically, there will be some changes in the Widget environment.
         </p>
         <p its-locale-filter-list="zh-hans" lang="zh-hans">
-          MiniApp Widget 包中需要包含配置文件，开发者可通过 Manifest 文件设置 Widget 的基本信息、样式和路由等信息。Widget 的 Manifest 文件应当与 <a href="https://w3c.github.io/miniapp/specs/manifest/">MiniApp Manifest 文件</a>的格式保持一致。特定地，在 Widget 环境中，会有一些变化：
+          MiniApp Widget 包中需要包含配置文件，开发者可通过 Manifest 文件设置 Widget 的基本信息、样式和路由等信息。Widget 的 Manifest 文件应当与 <a href="https://w3c.github.io/miniapp-manifest/">MiniApp Manifest 文件</a>的格式保持一致。特定地，在 Widget 环境中，会有一些变化：
         </p>
 
         <b>
@@ -372,10 +372,10 @@
       <section id="lifecycle">
         <h2>Lifecycle</h2>
         <p its-locale-filter-list="en" lang="en">
-          The lifecycle of the MiniApp Widget should be consistent with the <a href="https://w3c.github.io/miniapp/specs/lifecycle/">MiniApp Lifecyle</a>, wherein the trigger timing of <code>onShow</code>/<code>onHide</code> lifecycle callback will have some changes. As the Widget may also show or hide when the user agent slides the Widget off the screen or conducts a collapse action, the <code>onShow</code>/<code>onHide</code> of the Widget should also be triggered correctly at this time. Due to the form of the Widget and the form it runs in the user agent, the Widget also needs to support some new lifecycle API:
+          The lifecycle of the MiniApp Widget should be consistent with the <a href="https://w3c.github.io/miniapp-lifecycle/">MiniApp Lifecyle</a>, wherein the trigger timing of <code>onShow</code>/<code>onHide</code> lifecycle callback will have some changes. As the Widget may also show or hide when the user agent slides the Widget off the screen or conducts a collapse action, the <code>onShow</code>/<code>onHide</code> of the Widget should also be triggered correctly at this time. Due to the form of the Widget and the form it runs in the user agent, the Widget also needs to support some new lifecycle API:
         </p>
         <p its-locale-filter-list="zh-hans" lang="zh-hans">
-          MiniApp Widget 的生命周期应该与 <a href="https://w3c.github.io/miniapp/specs/lifecycle/">MiniApp 页面的生命周期</a>保持一致，其中 <code>onShow</code>/<code>onHide</code> 生命周期回调的触发时机会有一些变化。因为 Widget 的出现和消失也可能发生在 user agent 将 Widget 滑出屏幕或者进行折叠操作时，此时 Widget 的 <code>onShow</code>/<code>onHide</code> 也应该被正确的触发。因为 Widget 的形态和在宿主环境中运行的形式，Widget 也需要支持一些新的生命周期 API：
+          MiniApp Widget 的生命周期应该与 <a href="https://w3c.github.io/miniapp-lifecycle/">MiniApp 页面的生命周期</a>保持一致，其中 <code>onShow</code>/<code>onHide</code> 生命周期回调的触发时机会有一些变化。因为 Widget 的出现和消失也可能发生在 user agent 将 Widget 滑出屏幕或者进行折叠操作时，此时 Widget 的 <code>onShow</code>/<code>onHide</code> 也应该被正确的触发。因为 Widget 的形态和在宿主环境中运行的形式，Widget 也需要支持一些新的生命周期 API：
         </p>
         <ol>
           <li>
@@ -532,19 +532,19 @@
           <p its-locale-filter-list="zh-hans" lang="zh-hans"><a href="https://lists.w3.org/Archives/Public/public-webapps/2018OctDec/0011.html">W3C Widget 标准废弃说明</a></p>
         </li>
         <li>
-          <a href="https://w3c.github.io/miniapp/specs/">MiniApp Specifications</a>
+          <a href="https://w3c.github.io/miniapp/">MiniApp Specifications</a>
         </li>
         <li>
-          <a href="https://w3c.github.io/miniapp/specs/manifest/">MiniApp Manifest</a>
+          <a href="https://w3c.github.io/miniapp-manifest/">MiniApp Manifest</a>
         </li>
         <li>
-          <a href="https://w3c.github.io/miniapp/specs/uri/">MiniApp URI Scheme</a>
+          <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a>
         </li>
         <li>
-          <a href="https://w3c.github.io/miniapp/specs/lifecycle/">MiniApp Lifecycle</a>
+          <a href="https://w3c.github.io/miniapp-lifecycle/">MiniApp Lifecycle</a>
         </li>
         <li>
-          <a href="https://w3c.github.io/miniapp/specs/packaging/">MiniApp Packaging</a>
+          <a href="https://w3c.github.io/miniapp-packaging/">MiniApp Packaging</a>
         </li>
       </ol>
     </section>
