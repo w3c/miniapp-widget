@@ -1,6 +1,6 @@
 # MiniApp Widget Requirements explainer
 
-> Note: This document serves as a supplementary explanation of the [MiniApp Widget Requirement](https://w3c.github.io/miniapp-widget/req/) note. If there is any inconsistency with the note, you should consider the note to be authoritative.
+> Note: This document serves as a supplementary explanation of the [MiniApp Widget Requirements](https://w3c.github.io/miniapp-widget/req/) note. If there is any inconsistency with the note, you should consider the note to be authoritative.
 
 ## Authors
 Chen Canfeng (Xiaomi)  
