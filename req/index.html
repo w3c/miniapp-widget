@@ -81,10 +81,10 @@
 <body>
   <section id='abstract'>
     <p its-locale-filter-list="en" lang="en">
-      The MiniApp Widget is a special form of MiniApp Page. Unlike a page, a widget can occupy a certain area instead of the entire screen. It is used to display key information and respond to simple user operations, such as displaying the weather at the user’s current location, or tracking the user’s current travel status and providing further actions.
+      The MiniApp Widget is a special form of <a href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp Page</a>. Unlike a page, a widget can occupy a certain area instead of the entire screen. It is used to display key information and respond to simple user operations, such as displaying the weather at the user’s current location, or tracking the user’s current travel status and providing further actions.
     </p>
     <p its-locale-filter-list="zh-hans" lang="zh-hans">
-      MiniApp Widget 是 MiniApp 页面的一种特殊形式，与页面不同，Widget 可以仅占用屏幕的部分区域（而不是全部），用于为用户显示关键信息和响应简单的用户操作，例如显示用户所在地的天气，跟踪用户当前的行程状态并提供进一步的操作。
+      MiniApp Widget 是 <a href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp 页面</a>的一种特殊形式，与页面不同，Widget 可以仅占用屏幕的部分区域（而不是全部），用于为用户显示关键信息和响应简单的用户操作，例如显示用户所在地的天气，跟踪用户当前的行程状态并提供进一步的操作。
     </p>
     <p its-locale-filter-list="en" lang="en">
       In operating systems or host apps, the MiniApp Widget can be used for many scenarios. In some scenarios, the user can subscribe to a service and the Widget is displayed in a fixed position, while in other scenarios, the Widget can dynamically appear and disappear based on contextual requirements.
@@ -294,10 +294,10 @@
         <ol>
           <li>
             <p its-locale-filter-list="en" lang="en">
-              A MiniApp package may contain both the MiniApp Pages and Widgets. In some cases, MiniApp expects to display a Widget on the user agent, however, when the user clicks the content on the Widget, a MiniApp Page is provided as the landing page with richer content.
+              A MiniApp package may contain both the <a href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp Pages</a> and Widgets. In some cases, MiniApp expects to display a Widget on the user agent, however, when the user clicks the content on the Widget, a MiniApp Page is provided as the landing page with richer content.
             </p>
             <p its-locale-filter-list="zh-hans" lang="zh-hans">
-              一个 MiniApp 包中应该可以同时包含 MiniApp 页面和 Widget。在某些情况下，MiniApp 希望能在 user agent 上 显示一个 Widget，并在用户点击Widget上的内容时，提供 MiniApp 页面作为承载更丰富内容的落地页。
+              一个 MiniApp 包中应该可以同时包含 <a href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp 页面</a>和 Widget。在某些情况下，MiniApp 希望能在 user agent 上 显示一个 Widget，并在用户点击Widget上的内容时，提供 MiniApp 页面作为承载更丰富内容的落地页。
             </p>
           </li>
           <li>
@@ -327,10 +327,10 @@
           <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget 描述</span>
         </b>
         <p its-locale-filter-list="en" lang="en">
-          The Manifest file should include a widgets property (similar to the pages property), used for designating relevant information and configuration of widget contained in MiniApp, and should include the following:
+          The Manifest file should include a <code>widgets</code> property (similar to the <a href="https://www.w3.org/TR/miniapp-manifest/#pages-member">pages</a> property), used for designating relevant information and configuration of widget contained in MiniApp, and should include the following:
         </p>
         <p its-locale-filter-list="zh-hans" lang="zh-hans">
-          Manifest 文件中需要包含 widgets 字段（类似于 pages 字段），用于指定 MiniApp 中包含的 widget 的相关信息和配置，应当包含以下：
+          Manifest 文件中需要包含 <code>widgets</code> 字段（类似于 <a href="https://www.w3.org/TR/miniapp-manifest/#pages-member">pages</a> 字段），用于指定 MiniApp 中包含的 widget 的相关信息和配置，应当包含以下：
         </p>
         <ol>
           <li>
