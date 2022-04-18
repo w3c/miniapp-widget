@@ -23,7 +23,7 @@ The following parts are covered in the MiniApp Widget Requirements document:
 ## Sample code
 ### Addressing (URL)
 ```
-miniapp://foo;version=1.0.1-trial@example.com:8080/widgets/index?k=v#bar
+platform://miniapp/foo;version=1.0.1-trial/widgets/index?k=v#bar
 ```
 
 ### Packaging
