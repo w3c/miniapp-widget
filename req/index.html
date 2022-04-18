@@ -1,0 +1,1000 @@
+<!DOCTYPE html><html lang="en" class="is-multilingual"><head>
+<meta charset="utf-8">
+<meta name="generator" content="ReSpec 32.1.2">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<style>
+dfn{cursor:pointer}
+.dfn-panel{position:absolute;z-index:35;min-width:300px;max-width:500px;padding:.5em .75em;margin-top:.6em;font:small Helvetica Neue,sans-serif,Droid Sans Fallback;background:#fff;color:#000;box-shadow:0 1em 3em -.4em rgba(0,0,0,.3),0 0 1px 1px rgba(0,0,0,.05);border-radius:2px}
+.dfn-panel:not(.docked)>.caret{position:absolute;top:-9px}
+.dfn-panel:not(.docked)>.caret::after,.dfn-panel:not(.docked)>.caret::before{content:"";position:absolute;border:10px solid transparent;border-top:0;border-bottom:10px solid #fff;top:0}
+.dfn-panel:not(.docked)>.caret::before{border-bottom:9px solid #a2a9b1}
+.dfn-panel *{margin:0}
+.dfn-panel b{display:block;color:#000;margin-top:.25em}
+.dfn-panel ul a[href]{color:#333}
+.dfn-panel>div{display:flex}
+.dfn-panel a.self-link{font-weight:700;margin-right:auto}
+.dfn-panel .marker{padding:.1em;margin-left:.5em;border-radius:.2em;text-align:center;white-space:nowrap;font-size:90%;color:#040b1c}
+.dfn-panel .marker.dfn-exported{background:#d1edfd;box-shadow:0 0 0 .125em #1ca5f940}
+.dfn-panel .marker.idl-block{background:#8ccbf2;box-shadow:0 0 0 .125em #0670b161}
+.dfn-panel a:not(:hover){text-decoration:none!important;border-bottom:none!important}
+.dfn-panel a[href]:hover{border-bottom-width:1px}
+.dfn-panel ul{padding:0}
+.dfn-panel li{margin-left:1em}
+.dfn-panel.docked{position:fixed;left:.5em;top:unset;bottom:2em;margin:0 auto;max-width:calc(100vw - .75em * 2 - .5em - .2em * 2);max-height:30vh;overflow:auto}
+</style>
+  
+  
+<title>MiniApp Widget Requirements</title>
+
+  
+<link rel="stylesheet" href="https://w3c.github.io/miniapp-widget/local.css">
+
+  
+<style>
+
+    table {
+      border-collapse: collapse;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #666;
+    }
+
+    td {
+      padding: 2px 15px;
+    }
+  
+</style>
+
+  
+  
+<script defer="" src="https://w3c.github.io/miniapp-widget/script.js"></script>
+
+  
+
+<style id="respec-mainstyle">
+@keyframes pop{
+0%{transform:scale(1,1)}
+25%{transform:scale(1.25,1.25);opacity:.75}
+100%{transform:scale(1,1)}
+}
+:is(h1,h2,h3,h4,h5,h6,a) abbr{border:none}
+dfn{font-weight:700}
+a.internalDFN{color:inherit;border-bottom:1px solid #99c;text-decoration:none}
+a.externalDFN{color:inherit;border-bottom:1px dotted #ccc;text-decoration:none}
+a.bibref{text-decoration:none}
+.respec-offending-element:target{animation:pop .25s ease-in-out 0s 1}
+.respec-offending-element,a[href].respec-offending-element{text-decoration:red wavy underline}
+@supports not (text-decoration:red wavy underline){
+.respec-offending-element:not(pre){display:inline-block}
+.respec-offending-element{background:url(data:image/gif;base64,R0lGODdhBAADAPEAANv///8AAP///wAAACwAAAAABAADAEACBZQjmIAFADs=) bottom repeat-x}
+}
+#references :target{background:#eaf3ff;animation:pop .4s ease-in-out 0s 1}
+cite .bibref{font-style:normal}
+code{color:#c63501}
+th code{color:inherit}
+a[href].orcid{padding-left:4px;padding-right:4px}
+a[href].orcid>svg{margin-bottom:-2px}
+.toc a,.tof a{text-decoration:none}
+a .figno,a .secno{color:#000}
+ol.tof,ul.tof{list-style:none outside none}
+.caption{margin-top:.5em;font-style:italic}
+table.simple{border-spacing:0;border-collapse:collapse;border-bottom:3px solid #005a9c}
+.simple th{background:#005a9c;color:#fff;padding:3px 5px;text-align:left}
+.simple th a{color:#fff;padding:3px 5px;text-align:left}
+.simple th[scope=row]{background:inherit;color:inherit;border-top:1px solid #ddd}
+.simple td{padding:3px 10px;border-top:1px solid #ddd}
+.simple tr:nth-child(even){background:#f0f6ff}
+.section dd>p:first-child{margin-top:0}
+.section dd>p:last-child{margin-bottom:0}
+.section dd{margin-bottom:1em}
+.section dl.attrs dd,.section dl.eldef dd{margin-bottom:0}
+#issue-summary>ul{column-count:2}
+#issue-summary li{list-style:none;display:inline-block}
+details.respec-tests-details{margin-left:1em;display:inline-block;vertical-align:top}
+details.respec-tests-details>*{padding-right:2em}
+details.respec-tests-details[open]{z-index:999999;position:absolute;border:thin solid #cad3e2;border-radius:.3em;background-color:#fff;padding-bottom:.5em}
+details.respec-tests-details[open]>summary{border-bottom:thin solid #cad3e2;padding-left:1em;margin-bottom:1em;line-height:2em}
+details.respec-tests-details>ul{width:100%;margin-top:-.3em}
+details.respec-tests-details>li{padding-left:1em}
+.self-link:hover{opacity:1;text-decoration:none;background-color:transparent}
+aside.example .marker>a.self-link{color:inherit}
+.header-wrapper{display:flex;align-items:baseline}
+:is(h2,h3,h4,h5,h6):not(#toc>h2,#abstract>h2,#sotd>h2,.head>h2){position:relative;left:-.5em}
+:is(h2,h3,h4,h5,h6):not(#toch2)+a.self-link{color:inherit;order:-1;position:relative;left:-1.1em;font-size:1rem;opacity:.5}
+:is(h2,h3,h4,h5,h6)+a.self-link::before{content:"§";text-decoration:none;color:var(--heading-text)}
+:is(h2,h3)+a.self-link{top:-.2em}
+:is(h4,h5,h6)+a.self-link::before{color:#000}
+@media (max-width:767px){
+dd{margin-left:0}
+}
+@media print{
+.removeOnSave{display:none}
+}
+</style>
+<meta name="description" content="The MiniApp Widget is a special form of MiniApp Page. Unlike a page, a widget can occupy a certain area instead of the entire screen. It is used to display key information and respond to simple user operations, such as displaying the weather at the user’s current location, or tracking the user’s current travel status and providing further actions.">
+<style>
+var{position:relative;cursor:pointer}
+var[data-type]::after,var[data-type]::before{position:absolute;left:50%;top:-6px;opacity:0;transition:opacity .4s;pointer-events:none}
+var[data-type]::before{content:"";transform:translateX(-50%);border-width:4px 6px 0 6px;border-style:solid;border-color:transparent;border-top-color:#000}
+var[data-type]::after{content:attr(data-type);transform:translateX(-50%) translateY(-100%);background:#000;text-align:center;font-family:"Dank Mono","Fira Code",monospace;font-style:normal;padding:6px;border-radius:3px;color:#daca88;text-indent:0;font-weight:400}
+var[data-type]:hover::after,var[data-type]:hover::before{opacity:1}
+</style>
+<script id="initialUserConfig" type="application/json">{
+  "specStatus": "ED",
+  "copyrightStart": "2020",
+  "edDraftURI": "https://w3c.github.io/miniapp-widget/req/",
+  "shortName": "miniapp-widget-req",
+  "noRecTrack": true,
+  "editors": [
+    {
+      "name": "Yinli Chen",
+      "companyURL": "https://www.mi.com/",
+      "company": "Xiaomi",
+      "w3cid": 117298
+    },
+    {
+      "name": "Canfeng Chen",
+      "companyURL": "https://www.mi.com/",
+      "company": "Xiaomi",
+      "w3cid": 124040
+    },
+    {
+      "name": "Bingqing Zhou",
+      "companyURL": "https://www.mi.com/",
+      "company": "Xiaomi",
+      "w3cid": 136431
+    },
+    {
+      "name": "Bin Guo",
+      "companyURL": "https://www.mi.com/",
+      "company": "Xiaomi",
+      "w3cid": 120234
+    }
+  ],
+  "formerEditors": [
+    {
+      "name": "Xiaowei Jiang",
+      "companyURL": "https://www.mi.com/",
+      "company": "Xiaomi",
+      "w3cid": 115244
+    },
+    {
+      "name": "Yongqing Dong",
+      "companyURL": "https://www.mi.com/",
+      "company": "Xiaomi",
+      "w3cid": 118195
+    }
+  ],
+  "group": "wg/miniapps",
+  "github": {
+    "repoURL": "https://github.com/w3c/miniapp-widget",
+    "branch": "main"
+  },
+  "publishISODate": "2022-04-18T00:00:00.000Z",
+  "generatedSubtitle": "W3C Editor's Draft 18 April 2022"
+}</script>
+<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED"></head>
+
+<body class="h-entry informative"><div class="head">
+    <p class="logos"><a class="logo" href="https://www.w3.org/"><img crossorigin="" alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
+  </a></p>
+    <h1 id="title" class="title">MiniApp Widget Requirements</h1> 
+    <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">W3C Editor's Draft</a> <time class="dt-published" datetime="2022-04-18">18 April 2022</time></p>
+    <details open="">
+      <summary>More details about this document</summary>
+      <dl>
+        <dt>This version:</dt><dd>
+                <a class="u-url" href="https://w3c.github.io/miniapp-widget/req/">https://w3c.github.io/miniapp-widget/req/</a>
+              </dd>
+        <dt>Latest published version:</dt><dd>
+                <a href="https://www.w3.org/TR/miniapp-widget-req/">https://www.w3.org/TR/miniapp-widget-req/</a>
+              </dd>
+        <dt>Latest editor's draft:</dt><dd><a href="https://w3c.github.io/miniapp-widget/req/">https://w3c.github.io/miniapp-widget/req/</a></dd>
+        <dt>History:</dt><dd>
+                    <a href="https://www.w3.org/standards/history/miniapp-widget-req">https://www.w3.org/standards/history/miniapp-widget-req</a>
+                  </dd><dd>
+                    <a href="https://github.com/w3c/miniapp-widget/commits/main">Commit history</a>
+                  </dd>
+        
+        
+        
+        
+        
+        <dt>Editors:</dt><dd class="editor p-author h-card vcard" data-editor-id="117298">
+    <span class="p-name fn">Yinli Chen</span> (<a class="p-org org h-org" href="https://www.mi.com/">Xiaomi</a>)
+  </dd><dd class="editor p-author h-card vcard" data-editor-id="124040">
+    <span class="p-name fn">Canfeng Chen</span> (<a class="p-org org h-org" href="https://www.mi.com/">Xiaomi</a>)
+  </dd><dd class="editor p-author h-card vcard" data-editor-id="136431">
+    <span class="p-name fn">Bingqing Zhou</span> (<a class="p-org org h-org" href="https://www.mi.com/">Xiaomi</a>)
+  </dd><dd class="editor p-author h-card vcard" data-editor-id="120234">
+    <span class="p-name fn">Bin Guo</span> (<a class="p-org org h-org" href="https://www.mi.com/">Xiaomi</a>)
+  </dd>
+        <dt>
+                Former editors:
+              </dt><dd class="editor p-author h-card vcard" data-editor-id="115244">
+    <span class="p-name fn">Xiaowei Jiang</span> (<a class="p-org org h-org" href="https://www.mi.com/">Xiaomi</a>)
+  </dd><dd class="editor p-author h-card vcard" data-editor-id="118195">
+    <span class="p-name fn">Yongqing Dong</span> (<a class="p-org org h-org" href="https://www.mi.com/">Xiaomi</a>)
+  </dd>
+        
+        <dt>Feedback:</dt><dd>
+        <a href="https://github.com/w3c/miniapp-widget/">GitHub w3c/miniapp-widget</a>
+        (<a href="https://github.com/w3c/miniapp-widget/pulls/">pull requests</a>,
+        <a href="https://github.com/w3c/miniapp-widget/issues/new/choose">new issue</a>,
+        <a href="https://github.com/w3c/miniapp-widget/issues/">open issues</a>)
+      </dd>
+        
+        
+      </dl>
+    </details>
+    
+    
+    <p class="copyright">
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+    ©
+    2020-2022
+    
+    <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+    <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>,
+    <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+    <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and
+    <a rel="license" href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" title="W3C Software and Document Notice and License">permissive document license</a> rules apply.
+  </p>
+    <hr title="Separator for header">
+  </div>
+  <section id="abstract" class="introductory"><h2>Abstract</h2>
+    <p its-locale-filter-list="en" lang="en">
+      The MiniApp Widget is a special form of MiniApp Page. Unlike a page, a widget can occupy a certain area instead of the entire screen. It is used to display key information and respond to simple user operations, such as displaying the weather at the user’s current location, or tracking the user’s current travel status and providing further actions.
+    </p>
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">
+      MiniApp Widget 是 MiniApp 页面的一种特殊形式，与页面不同，Widget 可以仅占用屏幕的部分区域（而不是全部），用于为用户显示关键信息和响应简单的用户操作，例如显示用户所在地的天气，跟踪用户当前的行程状态并提供进一步的操作。
+    </p>
+    <p its-locale-filter-list="en" lang="en">
+      In operating systems or host apps, the MiniApp Widget can be used for many scenarios. In some scenarios, the user can subscribe to a service and the Widget is displayed in a fixed position, while in other scenarios, the Widget can dynamically appear and disappear based on contextual requirements.
+    </p>
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">
+      在操作系统或者宿主App中，MiniApp Widget 可以被应用于多种场景，某些场景下用户可以订阅和固定显示 Widget，另外一些场景下 Widget 可以根据上下文需求动态地显示和消失。
+    </p>
+    <p its-locale-filter-list="en" lang="en">
+      As the MiniApp Widget is an integral part of MiniApp, the other relevant parts are described in other related MiniApp documents. This document mainly describes the specific requirements that need to be considered when defining the MiniApp Widget Specification as well as other dependencies.
+    </p>
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">
+      由于 MiniApp Widget 是 MiniApp 的一个组成部分，因此相关的标准部分会在 MiniApp 的其他相关文档中描述，本文档主要描述会专注于定义 MiniApp Widget 规范需要考虑的特定需求和对其他部分依赖的描述。
+    </p>
+  </section>
+  <section id="sotd" class="introductory"><h2>Status of This Document</h2><p><em>This section describes the status of this
+      document at the time of its publication. A list of current <abbr title="World Wide Web Consortium">W3C</abbr>
+      publications and the latest revision of this technical report can be found
+      in the <a href="https://www.w3.org/TR/"><abbr title="World Wide Web Consortium">W3C</abbr> technical reports index</a> at
+      https://www.w3.org/TR/.</em></p>
+    
+    <p id="langSwitch">
+      <button onclick="switchLang('zh-hans')" lang="zh-hans">简体中文</button>
+      <button onclick="switchLang('en')" lang="en">English</button>
+      <button onclick="switchLang('all')" lang="en">All</button>
+    </p>
+    <p>
+    This document was published by the <a href="https://www.w3.org/groups/wg/miniapps">MiniApps Working Group</a> as
+    an Editor's Draft. 
+  </p><p>Publication as an Editor's Draft does not
+  imply endorsement by <abbr title="World Wide Web Consortium">W3C</abbr> and its Members. </p><p>
+    This is a draft document and may be updated, replaced or obsoleted by other
+    documents at any time. It is inappropriate to cite this document as other
+    than work in progress.
+    
+  </p><p>
+    
+        This document was produced by a group
+        operating under the
+        <a href="https://www.w3.org/Consortium/Patent-Policy/"><abbr title="World Wide Web Consortium">W3C</abbr> Patent
+          Policy</a>.
+      
+    
+                <abbr title="World Wide Web Consortium">W3C</abbr> maintains a
+                <a rel="disclosure" href="https://www.w3.org/groups/wg/miniapps/ipr">public list of any patent disclosures</a>
+          made in connection with the deliverables of
+          the group; that page also includes
+          instructions for disclosing a patent. An individual who has actual
+          knowledge of a patent which the individual believes contains
+          <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a>
+          must disclose the information in accordance with
+          <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+        
+  </p><p>
+                  This document is governed by the
+                  <a id="w3c_process_revision" href="https://www.w3.org/2021/Process-20211102/">2 November 2021 <abbr title="World Wide Web Consortium">W3C</abbr> Process Document</a>.
+                </p></section><nav id="toc"><h2 class="introductory" id="table-of-contents">Table of Contents</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#abstract">Abstract</a></li><li class="tocline"><a class="tocxref" href="#sotd">Status of This Document</a></li><li class="tocline"><a class="tocxref" href="#scenarios"><bdi class="secno">1. </bdi>
+        <span its-locale-filter-list="en" lang="en">Usage scenarios</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">用户场景</span>
+      </a></li><li class="tocline"><a class="tocxref" href="#requirement"><bdi class="secno">2. </bdi>
+        <span its-locale-filter-list="en" lang="en">Requirement</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">需求</span>
+      </a><ol class="toc"><li class="tocline"><a class="tocxref" href="#useragent"><bdi class="secno">2.1 </bdi>
+          <span its-locale-filter-list="en" lang="en">User agent</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">宿主环境</span>
+        </a></li><li class="tocline"><a class="tocxref" href="#addressing"><bdi class="secno">2.2 </bdi>URI</a></li><li class="tocline"><a class="tocxref" href="#packaging"><bdi class="secno">2.3 </bdi>
+          <span its-locale-filter-list="en" lang="en">Packaging</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">包</span>
+        </a></li><li class="tocline"><a class="tocxref" href="#manifest"><bdi class="secno">2.4 </bdi>
+          <span its-locale-filter-list="en" lang="en">Manifest File</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">Manifest 文件</span>
+        </a></li><li class="tocline"><a class="tocxref" href="#lifecycle"><bdi class="secno">2.5 </bdi>Lifecycle</a></li><li class="tocline"><a class="tocxref" href="#api"><bdi class="secno">2.6 </bdi>MiniApp API</a></li><li class="tocline"><a class="tocxref" href="#components"><bdi class="secno">2.7 </bdi>
+          <span its-locale-filter-list="en" lang="en">MiniApp Components</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp 组件</span>
+        </a></li><li class="tocline"><a class="tocxref" href="#communication"><bdi class="secno">2.8 </bdi>
+          <span its-locale-filter-list="en" lang="en">Data communication between MiniApp Widget and MiniApp</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget 和 MiniApp 之间的数据通信</span>
+        </a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">A. </bdi>
+        <span its-locale-filter-list="en" lang="en">References</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">参考</span>
+      </a></li></ol></nav>
+
+    <section id="scenarios"><div class="header-wrapper"><h2 id="x1-usage-scenarios"><bdi class="secno">1. </bdi>
+        <span its-locale-filter-list="en" lang="en">Usage scenarios</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">用户场景</span>
+      </h2><a class="self-link" href="#scenarios" aria-label="Permalink for Section 1."></a></div>
+      
+      <ol>
+        <li>
+          <p its-locale-filter-list="en" lang="en">
+          In order to quickly check information, users can add favorite MiniApp Widgets in the Widget list of the system, such as weather, calendar, route, etc. When users need further operations, they can click the button on the MiniApp Widget to open the MiniApp Page.
+          </p>
+          <p its-locale-filter-list="zh-hans" lang="zh-hans">
+            在系统的Widget列表中，用户可以添加喜欢的 MiniApp Widget，例如天气、日历、行程等，快速查看信息。用户需要更进一步操作时，可以点击MiniApp Widget上的按钮，打开MiniApp页面。
+          </p>
+        </li>
+        <li>
+          <p its-locale-filter-list="en" lang="en">
+          When a user is browsing a video or photo content-type MiniApp, the product in the content is automatically recognized. When the user clicks on this product, the MiniApp Widget related to the e-commerce MiniApp will pop-up. This Widget appears in the form of a floating window, presenting some basic information about the product. Users can click the details button on the Widget to jump to the e-commerce MiniApp Page to purchase.
+          </p>
+          <p its-locale-filter-list="zh-hans" lang="zh-hans">
+            用户在浏览视频或者图片类 MiniApp 时，自动识别内容中的商品。当用户点击这个商品时，打开电商 MiniApp 相关的 MiniApp Widget。这个 Widget 可以浮窗形式出现，呈现商品的一些基本信息。用户可以点击Widget上的详情按钮，跳转到电商MiniApp的页面来购买。
+          </p>
+        </li>
+        <li>
+          <p its-locale-filter-list="en" lang="en">
+          When the user asks the voice assistant, such as asking about the exchange rate, the voice assistant opens the MiniApp Widget related to the exchange rate and presents relevant information.
+          </p>
+          <p its-locale-filter-list="zh-hans" lang="zh-hans">
+            用户询问语音助手时，例如询问汇率，语音助手打开汇率相关的MiniApp Widget，呈现相关信息。
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="requirement"><div class="header-wrapper"><h2 id="x2-requirement"><bdi class="secno">2. </bdi>
+        <span its-locale-filter-list="en" lang="en">Requirement</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">需求</span>
+      </h2><a class="self-link" href="#requirement" aria-label="Permalink for Section 2."></a></div>
+      
+      
+      <section id="useragent"><div class="header-wrapper"><h3 id="x2-1-user-agent"><bdi class="secno">2.1 </bdi>
+          <span its-locale-filter-list="en" lang="en">User agent</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">宿主环境</span>
+        </h3><a class="self-link" href="#useragent" aria-label="Permalink for Section 2.1"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          The MiniApp Widget runs in a host environment that is called the <a href="https://www.w3.org/TR/miniapp-packaging/#dfn-useragent">user agent</a>. The MiniApp Widget user agent is largely the same as the MiniApp user agent, and shall meet the following requirements:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          MiniApp Widget 需要在一个宿主环境中运行，这个环境被称为 <a href="https://www.w3.org/TR/miniapp-packaging/#dfn-useragent">user agent</a>。MiniApp Widget 的 user agent 在较大程度下与 MiniApp 的 user agent 保持一致，应该满足如下一些需求：
+        </p>
+
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The MiniApp Widget user agent should be able to parse the MiniApp URI and obtain the MiniApp package according to the process described in the <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> specification, and it shall conform to the requirements in the <a href="https://www.w3.org/TR/miniapp-addressing/#dereferencing">Dereferencing</a> section of the <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> specification.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              MiniApp Widget 的 user agent 应当能根据 <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> 规范中描述的过程解析 MiniApp URI 并获取 MiniApp 包，该过程应当符合 <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> 规范中<a href="https://www.w3.org/TR/miniapp-addressing/#dereferencing">解引用</a>一节描述。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The user agent should be able to parse the structure of the MiniApp package as described in the <a href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a> specification.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              User agent 应当能按照 <a href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a> 规范的描述解析 MiniApp 包结构。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The user agent should be able to parse the manifest file as described in the <a href="https://www.w3.org/TR/miniapp-manifest/">MiniApp Manifest</a> specification, so as to load and run the MiniApp Widget. Some specific requirements related to the Widget are described in the Manifest File section of this document.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              User agent 应当能按照 <a href="https://www.w3.org/TR/miniapp-manifest/">MiniApp Manifest</a> 规范的描述解析 manifest 文件，以加载运行 MiniApp Widget。在本文档的 Manifest 文件一节中描述了一些与 Widget 相关的特定需求。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The form of resources that the MiniApp Widget accesses in the package is consistent with a MiniApp page. Therefore, the user agent should be able to access the resource files in the MiniApp package in the same way.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              MiniApp Widget 访问到包中的资源形式与 MiniApp 页面保持一致。因此，user agent 应能以同样的方式访问 MiniApp 包中的资源文件。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              When running the widget, the user agent should be able to provide necessary interface support. Some specific requirements related to the Widget are described in the MiniApp API section of this document.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              在运行过程中，user agent 应能提供必要的接口支持，在本文档的 MiniApp API 一节中描述与 Widget 相关的特定需求。
+            </p>
+          </li>
+        </ol>
+        <p its-locale-filter-list="en" lang="en">
+          Specifically, in the MiniApp Widget scenario, as the Widget itself does not occupy the complete screen space, the user agent will have some specific requirements:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          特定地，在 MiniApp Widget 场景下，由于 Widget 本身并不占据完整的屏幕空间，user agent 也会有一些特定的需求：
+        </p>
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The user agent can integrate the MiniApp Widget with its own interface, to achieve a better integration experience.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              User agent 可以将 MiniApp Widget 与自身界面结合在一起显示，以达到更好的融合体验。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">To better integrate the MiniApp Widget and the user agent interface, the user agent should provide its style information to the MiniApp Widget, so as to better support the requirements such as dark mode.</p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              为了更好地将 MiniApp Widget 与 user agent 的界面融合，user agent 应当为 MiniApp Widget 提供自身样式的信息，以更好的支持诸如深色模式等需求。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">The user agent should be able to load and display multiple MiniApp Widgets concurrently, for example, display a relevant air ticket Widget and taxi Widget simultaneously on Intelligent Assistant.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 可以同时加载并显示多个 MiniApp Widget，例如在智能助理中同时显示相关的机票 Widget 和打车 Widget。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">Some behaviors of the User agent may cause the Widget to show or hide, and in such a case, the lifecycle callback of the Widget should be triggered correctly.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              User agent 的一些行为可能会导致 Widget 的展现和消失，此时应该正确触发 Widget 的生命周期回调。
+            </p>
+          </li>
+        </ol>
+
+      </section>
+
+      <section id="addressing"><div class="header-wrapper"><h3 id="x2-2-uri"><bdi class="secno">2.2 </bdi>URI</h3><a class="self-link" href="#addressing" aria-label="Permalink for Section 2.2"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          The MiniApp Widget URI should be consistent with the <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> specification, to ensure that:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          MiniApp Widget 的 URI 规范应该与 <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> 规范保持一致，以确保：
+        </p>
+
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The user agent can obtain the MiniApp package containing the MiniApp Widget using the same mechanism.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              User agent 能以相同的机制获取包含 MiniApp Widget 的 MiniApp 包。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The user agent can locate and load the MiniApp Widget using the same mechanism as the MiniApp Page.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              User agent 能以与 MiniApp 页面相同的机制定位并加载 MiniApp Widget。
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="packaging"><div class="header-wrapper"><h3 id="x2-3-packaging"><bdi class="secno">2.3 </bdi>
+          <span its-locale-filter-list="en" lang="en">Packaging</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">包</span>
+        </h3><a class="self-link" href="#packaging" aria-label="Permalink for Section 2.3"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          Like MiniApp, the MiniApp Widget is also distributed in the form of a package. After the user agent acquires and verifies a MiniApp package, it will acquire the Widget information contained in the package, and load and display it correctly. The form and specification of the package should be consistent with the <a href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a> specification, including but not limited to file organization, compression format, filename extension, digital signature, etc. The user agent should use the same form to verify and install the MiniApp Widget package.
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          与 MiniApp 保持一致，MiniApp Widget 同样以包的形式分发，User agent 获取到 MiniApp 包并进行校验后，获取包中包含的Widget信息，并正确地加载和显示。包的形式和规范应当与 <a href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a> 规范保持一致。包括不限于文件组织形式、压缩格式、文件后缀名、数字签名等。User agent 会以同样的形式对 MiniApp Widget 的包进行校验、安装等过程。
+        </p>
+        <p its-locale-filter-list="en" lang="en">
+          In the MiniApp Widget scenario, the specific requirements are as follows:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          在 MiniApp Widget 场景下，特定的需求：
+        </p>
+
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              A MiniApp package may contain both the MiniApp Pages and Widgets. In some cases, MiniApp expects to display a Widget on the user agent, however, when the user clicks the content on the Widget, a MiniApp Page is provided as the landing page with richer content.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              一个 MiniApp 包中应该可以同时包含 MiniApp 页面和 Widget。在某些情况下，MiniApp 希望能在 user agent 上 显示一个 Widget，并在用户点击Widget上的内容时，提供 MiniApp 页面作为承载更丰富内容的落地页。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              A MiniApp package may contain only Widgets without Pages. Some MiniApp providers just want to provide simplest functions on the Widget to meet the users’ specific needs.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              一个 MiniApp 包中应该可以只包含 Widget，不包含 Page。某些 MiniApp 的提供方只希望在 Widget 上提供最简单的功能，以满足用户的特定需求。</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="manifest"><div class="header-wrapper"><h3 id="x2-4-manifest-file-manifest"><bdi class="secno">2.4 </bdi>
+          <span its-locale-filter-list="en" lang="en">Manifest File</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">Manifest 文件</span>
+        </h3><a class="self-link" href="#manifest" aria-label="Permalink for Section 2.4"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          The configuration file must be included in the MiniApp Widget package. Developers can set the basic information, style, and routing of the Widget through the Manifest file. The format of the Widget Manifest file should be          consistent with that of the <a href="https://www.w3.org/TR/miniapp-manifest/">MiniApp Manifest file</a>. Specifically, there will be some changes in the Widget environment.
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          MiniApp Widget 包中需要包含配置文件，开发者可通过 Manifest 文件设置 Widget 的基本信息、样式和路由等信息。Widget 的 Manifest 文件应当与 <a href="https://www.w3.org/TR/miniapp-manifest/">MiniApp Manifest 文件</a>的格式保持一致。特定地，在 Widget 环境中，会有一些变化：
+        </p>
+
+        <b>
+          <span its-locale-filter-list="en" lang="en">Widget Description</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget 描述</span>
+        </b>
+        <p its-locale-filter-list="en" lang="en">
+          The Manifest file should include a widgets property (similar to the pages property), used for designating relevant information and configuration of widget contained in MiniApp, and should include the following:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          Manifest 文件中需要包含 widgets 字段（类似于 pages 字段），用于指定 MiniApp 中包含的 widget 的相关信息和配置，应当包含以下：
+        </p>
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              Name of the MiniApp Widget
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              MiniApp Widget 的名字
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              File path of the MiniApp Widget – used for locating the file where the MiniApp Widget is located
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              MiniApp Widget 的文件路径，用于定位 MiniApp Widget 所在的文件
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              Minimum platform version. Different minimum platform version declarations may exist as there may be differences between the Widget API and MiniApp API. As the Widget is loaded independently, the minimum platform version declaration can be directed for a single widget
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              最小平台版本，因为 Widget 涉及的 API 与 MiniApp API 有一定差别，可能会存在不同的最小平台版本声明。且因为 Widget 是独立加载的，最小平台版本声明可以针对单个 widget 声明
+            </p>
+          </li>
+        </ol>
+
+        <b>
+          <span its-locale-filter-list="en" lang="en">Field changes in Manifest file</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">Manifest 文件字段变化</span>
+        </b>
+        <p its-locale-filter-list="en" lang="en">
+          Due to some features of the widget, some configuration information in the Manifest file will not take effect in widgets. For example, the <code>fullScreen</code> property of <code>window</code> describes whether the MiniApp Page is displayed in fullscreen, however, as the widget has no fullscreen mode, this property will be ignored.
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          因为 widget 的一些特点，Manifest 文件中的一些配置信息，在 Widget 中不会生效。例如 <code>window</code> 的 <code>fullScreen</code> 属性，描述了 MiniApp 页面是否以全屏形式显示，由于 widget 并没有对应的形式，因此会忽略这个信息。
+        </p>
+      </section>
+
+      <section id="lifecycle"><div class="header-wrapper"><h3 id="x2-5-lifecycle"><bdi class="secno">2.5 </bdi>Lifecycle</h3><a class="self-link" href="#lifecycle" aria-label="Permalink for Section 2.5"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          The lifecycle of the MiniApp Widget should be consistent with the <a href="https://www.w3.org/TR/miniapp-lifecycle/">MiniApp Lifecyle</a>, wherein the trigger timing of <code>onShow</code>/<code>onHide</code> lifecycle callback will have some changes. As the Widget may also show or hide when the user agent slides the Widget off the screen or conducts a collapse action, the <code>onShow</code>/<code>onHide</code> of the Widget should also be triggered correctly at this time. Due to the form of the Widget and the form it runs in the user agent, the Widget also needs to support some new lifecycle API:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          MiniApp Widget 的生命周期应该与 <a href="https://www.w3.org/TR/miniapp-lifecycle/">MiniApp 页面的生命周期</a>保持一致，其中 <code>onShow</code>/<code>onHide</code> 生命周期回调的触发时机会有一些变化。因为 Widget 的出现和消失也可能发生在 user agent 将 Widget 滑出屏幕或者进行折叠操作时，此时 Widget 的 <code>onShow</code>/<code>onHide</code> 也应该被正确的触发。因为 Widget 的形态和在宿主环境中运行的形式，Widget 也需要支持一些新的生命周期 API：
+        </p>
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              In case of changes in system language, window size, color scheme etc., the Widget needs to receive the changed information to change the interface.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              当系统语言/窗口大小/Darkmode 等发生变化时，Widget 需要接收到变化后的信息，以改变界面。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              The user agent may update the status of the Widget interface in the form of incoming data; Widget reinitialization should not be triggered at this time.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              宿主环境可能会通过传入数据的形式更新 Widget 界面的状态，此时不应该触发 Widget 的重新初始化。
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="api"><div class="header-wrapper"><h3 id="x2-6-miniapp-api"><bdi class="secno">2.6 </bdi>MiniApp API</h3><a class="self-link" href="#api" aria-label="Permalink for Section 2.6"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          The API that developers can use in the MiniApp Widget should be consistent with the <b><i>[MiniApp API specification]</i></b> as much as possible, however, some APIs need to be adjusted for specific MiniApp Widget scenarios. The content in this section should be adjusted based on the <b><i>[MiniApp API specification]</i></b>.
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          开发者在 MiniApp Widget 中可以使用的API 应当与 <b><i>[MiniApp API 规范]</i></b> 尽量保持一致，但有一些 API 需要针对 MiniApp Widget 场景进行调整，本节内容应根据 <b><i>[MiniApp API 规范]</i></b> 内容调整。
+        </p>
+        <p its-locale-filter-list="en" lang="en">
+          Some APIs that could be used on MiniApp Page need to be adjusted in Widget scenario, such as:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          在 Widget 场景下，一些原先在 MiniApp 页面上可以使用的 API 需要调整，例如：
+        </p>
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              API with background persistence or API passively triggered, e.g. background location and push. As the Widget runs in the user agent, it does not exist as an independent unit in terms of user perception, and these APIs are prone to cause user confusion between calling the Widget and the user agent.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              具备后台持续能力或者被动触发的 API，例如持续定位和推送，因为 Widget 在 user agent 环境中运行，在用户认知上并不作为独立运行的单元存在，这些 API 易造成用户将 Widget 的调用与 user agent 混淆。
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              API that can capture user attention and cause misunderstanding by the user, e.g. launching the camera interface. As multiple Widgets may be displayed on the same interface, if these Widgets directly call the API to open the interface concurrently, it will cause the user to misunderstand.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              会抢占用户注意力，造成用户错误认知的 API，例如打开拍照界面等，由于多个 Widget 可能会同时显示在一个界面上，如果多个 Widget 均直接调用打开界面的 API，会造成用户理解上的错误。
+            </p>
+          </li>
+        </ol>
+
+        <p its-locale-filter-list="en" lang="en">The User agent should provide some new APIs suitable for the Widget, for example:</p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 会提供一些适用于 Widget 的新 API，例如：</p>
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">API to obtain the current window size (viewport width)</p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">获取当前窗口大小的 API（视口宽度）</p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">API to obtain the current user agent information, to enable the Widget to adapt to the specific user agent</p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">获取当前 user agent 信息的 API，以支持 Widget 针对特定的 user agent 进行适配
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">Pre-authorized APIs in a batch. As there may be multiple MiniApp Widgets on the user agent concurrently, multiple APIs that dynamically obtain permission will cause user confusion. Thus, the user agent should provide pre-authorized APIs in a batch.</p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">批量预授权的 API，由于 user agent 上可能同时存在多个 MiniApp Widget，出现多个动态获取权限的 API 会对用户造成困扰，user agent 应提供批量预授权的 API</p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">Extended APIs for specific user agents, e.g., request to obtain the latest version of the Widget</p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">特定宿主环境的拓展 API，例如请求获取到最新版本的 Widget</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="components"><div class="header-wrapper"><h3 id="x2-7-miniapp-components-miniapp"><bdi class="secno">2.7 </bdi>
+          <span its-locale-filter-list="en" lang="en">MiniApp Components</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp 组件</span>
+        </h3><a class="self-link" href="#components" aria-label="Permalink for Section 2.7"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          The components that developers can use in the Widget should be consistent with the <b><i>[MiniApp component specification]</i></b> as much as possible, however, some components need to be adjusted for specific Widget scenarios. The content in this section should be adjusted based on the <b><i>[MiniApp component specification]</i></b>.
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          开发者在 Widget 中可以使用的组件应当与 <b><i>[MiniApp 组件规范]</i></b> 尽量保持一致，但有一些组件需要针对 Widget 场景进行调整，本节内容应根据 <b><i>[MiniApp 组件规范]</i></b> 内容调整。
+        </p>
+        <p its-locale-filter-list="en" lang="en">
+          The behavior of some components may conflict with the behavior of the user agent, for example:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          一些组件的行为可能与 user agent 的行为发生冲突，例如：
+        </p>
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              If some Widgets include a relatively long scrollable list, it may conflict with the sliding up and down operation of the user agent
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              某些 Widget 中如果包含较长的滚动列表，可能与 user agent 的上下滑动操作发生冲突
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="communication"><div class="header-wrapper"><h3 id="x2-8-data-communication-between-miniapp-widget-and-miniapp-miniapp-widget-miniapp"><bdi class="secno">2.8 </bdi>
+          <span its-locale-filter-list="en" lang="en">Data communication between MiniApp Widget and MiniApp</span>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget 和 MiniApp 之间的数据通信</span>
+        </h3><a class="self-link" href="#communication" aria-label="Permalink for Section 2.8"></a></div>
+        
+        <p its-locale-filter-list="en" lang="en">
+          Under certain circumstances, the Widget needs to maintain certain data communication with MiniApp, for example:
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          在一定情况下，Widget 需要与 MiniApp 保持一定的数据通信，例如：
+        </p>
+        <ol>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              If already logged in MiniApp, the same login status is maintained in the Widget.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              在 MiniApp 中已经登录，在 Widget 保持同一登录状态
+            </p>
+          </li>
+          <li>
+            <p its-locale-filter-list="en" lang="en">
+              If a MiniApp is playing music, the Widget gets the playing status to show playback control.
+            </p>
+            <p its-locale-filter-list="zh-hans" lang="zh-hans">
+              MiniApp 播放音乐，Widget 获取播放状态以显示播放控件
+            </p>
+          </li>
+        </ol>
+        <p its-locale-filter-list="en" lang="en">
+          Therefore, the specifications should include a description of data communication between the MiniApp Widget and MiniApp.
+        </p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">
+          因此规范中应补充 MiniApp Widget 与 MiniApp 之间数据通信的描述。
+        </p>
+      </section>
+    </section>
+
+    <section class="appendix" id="references"><div class="header-wrapper"><h2 id="a-references"><bdi class="secno">A. </bdi>
+        <span its-locale-filter-list="en" lang="en">References</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">参考</span>
+      </h2><a class="self-link" href="#references" aria-label="Permalink for Appendix A."></a></div>
+      
+      <ol>
+        <li><a href="https://www.w3.org/TR/widgets-reqs/">Requirement For Standardizing Widgets</a></li>
+        <li>
+          <p its-locale-filter-list="en" lang="en"><a href="https://lists.w3.org/Archives/Public/public-webapps/2018OctDec/0011.html">Widget related Recommendations are <abbr title="World Wide Web Consortium">W3C</abbr> Obsolete Recommendations</a></p>
+          <p its-locale-filter-list="zh-hans" lang="zh-hans"><a href="https://lists.w3.org/Archives/Public/public-webapps/2018OctDec/0011.html"><abbr title="World Wide Web Consortium">W3C</abbr> Widget 标准废弃说明</a></p>
+        </li>
+        <li>
+          <a href="https://w3c.github.io/miniapp/">MiniApp Specifications</a>
+        </li>
+        <li>
+          <a href="https://www.w3.org/TR/miniapp-manifest/">MiniApp Manifest</a>
+        </li>
+        <li>
+          <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a>
+        </li>
+        <li>
+          <a href="https://www.w3.org/TR/miniapp-lifecycle/">MiniApp Lifecycle</a>
+        </li>
+        <li>
+          <a href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a>
+        </li>
+      </ol>
+    </section>
+
+
+
+<p role="navigation" id="back-to-top">
+    <a href="#title"><abbr title="Back to Top">↑</abbr></a>
+  </p><script id="respec-dfn-panel">(() => {
+// @ts-check
+if (document.respec) {
+  document.respec.ready.then(setupPanel);
+} else {
+  setupPanel();
+}
+
+function setupPanel() {
+  const listener = panelListener();
+  document.body.addEventListener("keydown", listener);
+  document.body.addEventListener("click", listener);
+}
+
+function panelListener() {
+  /** @type {HTMLElement} */
+  let panel = null;
+  return event => {
+    const { target, type } = event;
+
+    if (!(target instanceof HTMLElement)) return;
+
+    // For keys, we only care about Enter key to activate the panel
+    // otherwise it's activated via a click.
+    if (type === "keydown" && event.key !== "Enter") return;
+
+    const action = deriveAction(event);
+
+    switch (action) {
+      case "show": {
+        hidePanel(panel);
+        /** @type {HTMLElement} */
+        const dfn = target.closest("dfn, .index-term");
+        panel = document.getElementById(`dfn-panel-for-${dfn.id}`);
+        const coords = deriveCoordinates(event);
+        displayPanel(dfn, panel, coords);
+        break;
+      }
+      case "dock": {
+        panel.style.left = null;
+        panel.style.top = null;
+        panel.classList.add("docked");
+        break;
+      }
+      case "hide": {
+        hidePanel(panel);
+        panel = null;
+        break;
+      }
+    }
+  };
+}
+
+/**
+ * @param {MouseEvent|KeyboardEvent} event
+ */
+function deriveCoordinates(event) {
+  const target = /** @type HTMLElement */ (event.target);
+
+  // We prevent synthetic AT clicks from putting
+  // the dialog in a weird place. The AT events sometimes
+  // lack coordinates, so they have clientX/Y = 0
+  const rect = target.getBoundingClientRect();
+  if (
+    event instanceof MouseEvent &&
+    event.clientX >= rect.left &&
+    event.clientY >= rect.top
+  ) {
+    // The event probably happened inside the bounding rect...
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  // Offset to the middle of the element
+  const x = rect.x + rect.width / 2;
+  // Placed at the bottom of the element
+  const y = rect.y + rect.height;
+  return { x, y };
+}
+
+/**
+ * @param {Event} event
+ */
+function deriveAction(event) {
+  const target = /** @type {HTMLElement} */ (event.target);
+  const hitALink = !!target.closest("a");
+  if (target.closest("dfn:not([data-cite]), .index-term")) {
+    return hitALink ? "none" : "show";
+  }
+  if (target.closest(".dfn-panel")) {
+    if (hitALink) {
+      return target.classList.contains("self-link") ? "hide" : "dock";
+    }
+    const panel = target.closest(".dfn-panel");
+    return panel.classList.contains("docked") ? "hide" : "none";
+  }
+  if (document.querySelector(".dfn-panel:not([hidden])")) {
+    return "hide";
+  }
+  return "none";
+}
+
+/**
+ * @param {HTMLElement} dfn
+ * @param {HTMLElement} panel
+ * @param {{ x: number, y: number }} clickPosition
+ */
+function displayPanel(dfn, panel, { x, y }) {
+  panel.hidden = false;
+  // distance (px) between edge of panel and the pointing triangle (caret)
+  const MARGIN = 20;
+
+  const dfnRects = dfn.getClientRects();
+  // Find the `top` offset when the `dfn` can be spread across multiple lines
+  let closestTop = 0;
+  let minDiff = Infinity;
+  for (const rect of dfnRects) {
+    const { top, bottom } = rect;
+    const diffFromClickY = Math.abs((top + bottom) / 2 - y);
+    if (diffFromClickY < minDiff) {
+      minDiff = diffFromClickY;
+      closestTop = top;
+    }
+  }
+
+  const top = window.scrollY + closestTop + dfnRects[0].height;
+  const left = x - MARGIN;
+  panel.style.left = `${left}px`;
+  panel.style.top = `${top}px`;
+
+  // Find if the panel is flowing out of the window
+  const panelRect = panel.getBoundingClientRect();
+  const SCREEN_WIDTH = Math.min(window.innerWidth, window.screen.width);
+  if (panelRect.right > SCREEN_WIDTH) {
+    const newLeft = Math.max(MARGIN, x + MARGIN - panelRect.width);
+    const newCaretOffset = left - newLeft;
+    panel.style.left = `${newLeft}px`;
+    /** @type {HTMLElement} */
+    const caret = panel.querySelector(".caret");
+    caret.style.left = `${newCaretOffset}px`;
+  }
+
+  // As it's a dialog, we trap focus.
+  // TODO: when <dialog> becomes a implemented, we should really
+  // use that.
+  trapFocus(panel, dfn);
+}
+
+/**
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function trapFocus(panel, dfn) {
+  /** @type NodeListOf<HTMLAnchorElement> elements */
+  const anchors = panel.querySelectorAll("a[href]");
+  // No need to trap focus
+  if (!anchors.length) return;
+
+  // Move focus to first anchor element
+  const first = anchors.item(0);
+  first.focus();
+
+  const trapListener = createTrapListener(anchors, panel, dfn);
+  panel.addEventListener("keydown", trapListener);
+
+  // Hiding the panel releases the trap
+  const mo = new MutationObserver(records => {
+    const [record] = records;
+    const target = /** @type HTMLElement */ (record.target);
+    if (target.hidden) {
+      panel.removeEventListener("keydown", trapListener);
+      mo.disconnect();
+    }
+  });
+  mo.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+}
+
+/**
+ *
+ * @param {NodeListOf<HTMLAnchorElement>} anchors
+ * @param {HTMLElement} panel
+ * @param {HTMLElement} dfn
+ * @returns
+ */
+function createTrapListener(anchors, panel, dfn) {
+  const lastIndex = anchors.length - 1;
+  let currentIndex = 0;
+  return event => {
+    switch (event.key) {
+      // Hitting "Tab" traps us in a nice loop around elements.
+      case "Tab": {
+        event.preventDefault();
+        currentIndex += event.shiftKey ? -1 : +1;
+        if (currentIndex < 0) {
+          currentIndex = lastIndex;
+        } else if (currentIndex > lastIndex) {
+          currentIndex = 0;
+        }
+        anchors.item(currentIndex).focus();
+        break;
+      }
+
+      // Hitting "Enter" on an anchor releases the trap.
+      case "Enter":
+        hidePanel(panel);
+        break;
+
+      // Hitting "Escape" returns focus to dfn.
+      case "Escape":
+        hidePanel(panel);
+        dfn.focus();
+        return;
+    }
+  };
+}
+
+/** @param {HTMLElement} panel */
+function hidePanel(panel) {
+  if (!panel) return;
+  panel.hidden = true;
+  panel.classList.remove("docked");
+}
+})()</script><script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script></body></html>
