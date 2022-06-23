@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+  <meta charset="utf-8" />
+  <title>MiniApp Widget Specification</title>
+
+  <link rel="stylesheet" href="local.css" />
+
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #666;
+    }
+
+    td {
+      padding: 2px 15px;
+    }
+  </style>
+
+  <script async class="remove" src="https://www.w3.org/Tools/respec/respec-w3c"></script>
+  <script defer src="script.js"></script>
+
+  <script class="remove">
+    var respecConfig = {
+      specStatus: "ED",
+      copyrightStart: "2020",
+      edDraftURI: "https://w3c.github.io/miniapp-widget/req/",
+
+      shortName: "miniapp-widget-req",
+      noRecTrack: true,
+
+      editors: [{
+        name: "Yinli Chen",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 117298
+      }, {
+        name: "Xiaoping Zhao",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 137575
+      }, {
+        name: "Bingqing Zhou",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 136431
+      }, {
+        name: "Canfeng Chen",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 124040
+      }, {
+        name: "Xiangyang Yao",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 120234
+      }, {
+        name: "Wen Pan",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 120234
+      }, {
+        name: "Hai Jiang",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 120234
+      }],
+
+      group: "wg/miniapps",
+      github: {
+        repoURL: "https://github.com/w3c/miniapp-widget",
+        branch: "main",
+      },
+    };
+  </script>
+</head>
+<body lang=ZH-CN link="#0563C1" vlink="#954F72">
+
+<div class=WordSection1>
+<h1>
+<p class=MsoNormal><span lang=EN-US>MiniApp Widgets (Draft)</span></p>
+</h1>
+<h2>
+<p class=MsoNormal><span lang=EN-US>Editors</span></p>
+</h2>
+<p class=MsoNormal><span lang=EN-US>Yinli Chen (<a href="https://www.mi.com/">Xiaomi</a>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Xiaoping Zhao (<a href="https://www.mi.com/">Xiaomi</a>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Bingqing Zhou (<a href="https://www.mi.com/">Xiaomi</a>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Canfeng Chen (<a href="https://www.mi.com/">Xiaomi</a>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Xiangyang Yao (<a href="https://www.mi.com/">Xiaomi</a>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Wen Pan (<a href="https://www.mi.com/">Xiaomi</a>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Hai Jiang (<a href="https://www.mi.com/">Xiaomi</a>)</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>Abstract</span></p>
+</h2>
+<p class=MsoNormal><span lang=EN-US>MiniApp Widget</span>是<span lang=EN-US><a
+href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp<span
+lang=EN-US><span lang=EN-US>页面</span></span></a></span>的一种特殊形式，与页面不同，<span
+lang=EN-US>Widget </span>可以仅占用屏幕的部分区域（而不是全部），用于为用户显示关键信息和响应简单的用户操作，例如显示用户所在地的天气，跟踪用户当前的行程状态并提供进一步的操作。</p>
+
+<p class=MsoNormal><span lang=EN-US>The MiniApp Widget is a special form of <a
+href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp Page</a>.
+Unlike a page, a widget can occupy a certain area instead of the entire screen.
+It is used to display key information and respond to simple user operations,
+such as displaying the weather at the user’s current location, or tracking the
+user’s current travel status and providing further actions.</span></p>
+
+<p class=MsoNormal>本标准规定了MiniApp Widget的addressing、packaging、manifest和lifecycle要求，还规定了MiniApp widget与MiniApp或与宿主环境间进行互动交流的要求。</p>
+
+<p class=MsoNormal><span lang=EN-US>This specification defines addressing,
+packaging, manifest and lifecycle for a MiniApp Widget. The interaction and
+communication between MiniApp widget and MiniApp or host environment are also
+defined.</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>Status of This Document</span></p>
+</h2>
+<p class=MsoNormal> </p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>1 Introduction</span></p>
+</h2>
+<h3>
+<p class=MsoNormal><span lang=EN-US>1.1 Overview</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>MiniApp widget</span>是<span lang=EN-US>MiniApp</span>页面的一种特殊形式。与页面不同，<span
+lang=EN-US>widget</span>可以仅占用屏幕的部分区域（而不是全部），用于为用户显示关键信息和响应简单的用户操作，例如显示用户所在地的天气，跟踪用户当前的行程状态并提供进一步的操作。</p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget is a special form of MiniApp
+page. Unlike pages, widgets can use only part of the screen (rather than all of
+it) and are used to display key information to the user and respond to simple
+user actions, such as displaying the weather at the user's location, tracking
+user's current travel status and providing next actions .</span></p>
+<h3>
+<p class=MsoNormal><span lang=EN-US>1.2 Terminology</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>The following terms are specific to MiniApp
+widgets.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp</span></p>
+
+<p class=MsoNormal><span lang=EN-US>A light software application, that can be
+distributed through any digital means, and accessed through the Web. MiniApps
+are defined by a concrete file structure, distributed within a single file <a
+href="https://w3c.github.io/miniapp-packaging/#dfn-container">MiniApp ZIP
+container</a> that represents the whole <a
+href="https://w3c.github.io/miniapp-packaging/#dfn-package">MiniApp package</a>
+that can be processed and executed by <a
+href="https://w3c.github.io/miniapp-packaging/#dfn-useragent">MiniApp user
+agents</a>.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget</span></p>
+
+<p class=MsoNormal><span lang=EN-US>A special type of <a
+href="https://w3c.github.io/miniapp-packaging/#dfn-page">MiniApp page</a> that
+is displayed standalone in host environments such as assistants and device
+search pages to connect MiniApp services in specific scenarios.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp page</span></p>
+
+<p class=MsoNormal><span lang=EN-US>A collection of information that is
+displayed in a <a href="https://w3c.github.io/miniapp-packaging/#dfn-useragent">MiniApp
+user agent</a>, under the scope of a specific MiniApp.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp user agent</span></p>
+
+<p class=MsoNormal><span lang=EN-US>User agent </span>是一个实现了<span lang=EN-US>
+MiniApp </span>标准的软件，它可以获取和处理<span lang=EN-US> MiniApp </span>的包，将其渲染并在界面上显示，执行<span
+lang=EN-US>MiniApp</span>的逻辑和处理用户交互。</p>
+
+<p class=MsoNormal><span lang=EN-US>A software application that gets, process
+and renders <a href="https://w3c.github.io/miniapp-packaging/#dfn-package">MiniApp
+packages</a>, enabling execution and end-user interaction with MiniApps. </span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp host environments</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Host environments </span>是<span lang=EN-US>MiniApp</span>最终呈现界面所在的宿主，在<span
+lang=EN-US>MiniApp widget</span>的情况下，<span lang=EN-US>Host environments</span>与<span
+lang=EN-US>User agent</span>可能不是同一个应用，此时<span lang=EN-US>Host environments</span>指包含了一个或多个<span
+lang=EN-US>MiniApp widget</span>的界面，用户可以在这个界面上对<span lang=EN-US>widget</span>进行操作，<span
+lang=EN-US>User agent</span>指<span lang=EN-US>MiniApp widget</span>的运行环境。</p>
+
+<p class=MsoNormal><span lang=EN-US>The host where MiniApp finally presents the
+interface. In the case of MiniApp widget, host environments and user agent may
+not be the same application. At this time, host environments refers to the
+interface containing one or more MiniApp widgets. User can operate the widget
+on this interface. User agent refers to the running environment of MiniApp
+widget.</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>2 Use case</span></p>
+</h2>
+<p class=MsoNormal><span lang=EN-US>This section is non-normative.</span></p>
+
+<p class=MsoNormal>在系统的<span lang=EN-US>widget</span>列表中，用户可以添加喜欢的<span
+lang=EN-US> MiniApp widget</span>，例如天气、日历、行程等，快速查看信息。用户需要更进一步操作时，可以点击<span
+lang=EN-US>MiniApp Widget</span>上的按钮，打开<span lang=EN-US>MiniApp</span>页面。</p>
+
+<p class=MsoNormal>用户可以通过<span lang=EN-US> Widget </span>获取正在播放的音乐信息并进行播放控制。</p>
+
+<p class=MsoNormal>用户在浏览视频或者图片类<span lang=EN-US> MiniApp </span>时，自动识别内容中的商品。当用户点击这个商品时，打开电商<span
+lang=EN-US> MiniApp </span>相关的<span lang=EN-US> MiniApp Widget</span>。这个<span
+lang=EN-US> Widget </span>可以浮窗形式出现，呈现商品的一些基本信息。用户可以点击<span lang=EN-US>Widget</span>上的详情按钮，跳转到电商<span
+lang=EN-US>MiniApp</span>的页面来购买。</p>
+
+<p class=MsoNormal>用户询问语音助手时，例如询问汇率，语音助手打开汇率相关的<span lang=EN-US>MiniApp Widget</span>，呈现相关信息。</p>
+
+<p class=MsoNormal><span lang=EN-US>In system widget list, users can add their
+favorite MiniApp widgets, such as weather, calendar, itinerary, etc., to
+quickly view information. When next actions are needed, user can click the
+button on MiniApp widget to open MiniApp page.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Users can get the information of playing
+musicand and control the playback through a Miniapp widget.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>In video or picture MiniApps, the products
+in the content can be identified automatically. When user clicks on this item,
+the MiniApp Widget related to the e-commerce MiniApp is opened. This Widget can
+appear as a floating window, presenting some basic information about the
+product. Users can click the details button on the Widget to jump to the
+e-commerce MiniApp page to purchase.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>When voice assistant is asked about
+exchange rate, for instance, voice assistant can open related MiniApp Widget to
+present relevant information.</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>3 Addressing</span></p>
+</h2>
+<p class=MsoNormal>与<span lang=EN-US>MiniApp page</span>类似，定位<span lang=EN-US>MiniApp
+widget</span>及<span lang=EN-US>widget</span>中的资源的过程符合<span lang=EN-US><a
+href="https://w3c.github.io/miniapp-addressing/">Miniapp Addressing</a></span>定义的标准。</p>
+
+<p class=MsoNormal>与<span lang=EN-US>page</span>不同的是，<span lang=EN-US>MiniApp
+widget</span>并不存在<span lang=EN-US>start widget</span>。因此，指定某一个<span lang=EN-US>MiniApp
+widget</span>需要显式说明<span lang=EN-US>widget</span>的<span lang=EN-US>path</span>，如<span
+lang=EN-US>EXAMPLE 1</span>所示：</p>
+
+<p class=MsoNormal><span lang=EN-US>Similar to MiniApp page, the process of
+locating widget and the resources in it complies with the specification defined
+by <a href="https://w3c.github.io/miniapp-addressing/">Miniapp Addressing</a>.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Unlike Miniapp page, there is no start
+widget for a MiniApp widget. Therefore, specifying a MiniApp widget needs to
+specify the path of the widget explicitly, as shown in Example 1:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:-.3pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=566 valign=top style='width:425.2pt;border:solid windowtext 1.0pt;
+  padding:0cm .5pt 0cm .5pt'>
+  <p class=MsoNormal><span lang=EN-US>Markdown</span></p>
+  <p class=MsoNormal><span lang=EN-US>EXAMPLE 1: File structure containing a
+  MiniApp Widget</span></p>
+  <p class=MsoNormal><span lang=EN-US>EXAMPLE 1: </span>包含了<span lang=EN-US>MiniApp
+  Widget</span>的文件结构示例</p>
+  <p class=MsoNormal><span lang=EN-US>platform://miniapp/foo/widgets/index</span></p>
+  <p class=MsoNormal><span lang=EN-US>platform://miniapp/foo/widgets/index?category=img</span></p>
+  </td>
+ </tr>
+</table>
+<h2>
+<p class=MsoNormal><span lang=EN-US>4 Packaging</span></p>
+</h2>
+<p class=MsoNormal>包含<span lang=EN-US>Widget</span>的<span lang=EN-US>MiniApp</span>包结构符合如下要求：</p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp</span>的<span lang=EN-US><a
+href="https://w3c.github.io/miniapp-packaging/#root-directory"><span
+lang=EN-US><span lang=EN-US>根目录</span></span></a></span>可能包含<span lang=EN-US>widgets</span>子目录</p>
+
+<p class=MsoNormal><span lang=EN-US>widgets</span>子目录中包含了一组用于界面和逻辑的文件：</p>
+
+<p class=MsoNormal><span lang=EN-US>.html</span>文件定义了<span lang=EN-US>MiniApp
+widget</span>的结构和内容</p>
+
+<p class=MsoNormal><span lang=EN-US>.css</span>文件定义了<span lang=EN-US>MiniApp
+widget</span>的样式表</p>
+
+<p class=MsoNormal><span lang=EN-US>.js</span>文件定义了<span lang=EN-US>MiniApp
+widget</span>的逻辑代码</p>
+
+<p class=MsoNormal>典型的包含<span lang=EN-US>MiniApp widget</span>的文件结构如<span
+lang=EN-US>EXAMPLE 2</span>所示：</p>
+
+<p class=MsoNormal><span lang=EN-US>The structure of MiniApp package containing
+a Widget should meets the following requirements:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The root directory of MiniApp may contain
+the widgets subdirectory</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The widgets subdirectory contains a set of
+files for interface and logic:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The .html file defines the structure and
+content of the MiniApp widget</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The .css file defines the style sheet of
+the MiniApp widget</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The .js file defines the logic of the
+MiniApp widget</span></p>
+
+<p class=MsoNormal><span lang=EN-US>A typical file structure containing a
+MiniApp widget is shown in Example 2:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:-.3pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=566 valign=top style='width:425.2pt;border:solid windowtext 1.0pt;
+  padding:0cm .5pt 0cm .5pt'>
+  <p class=MsoNormal><span lang=EN-US>Gherkin</span></p>
+  <p class=MsoNormal><span lang=EN-US>EXAMPLE 2: File structure containing a
+  MiniApp Widget</span></p>
+  <p class=MsoNormal><span lang=EN-US>EXAMPLE 2: </span>包含了<span lang=EN-US>MiniApp
+  Widget</span>的文件结构示例</p>
+  <p class=MsoNormal><span lang=EN-US>/</span></p>
+  <p class=MsoNormal><span lang=EN-US>|___manifest.json</span></p>
+  <p class=MsoNormal><span lang=EN-US>|___app.js</span></p>
+  <p class=MsoNormal><span lang=EN-US>|___app.css</span></p>
+  <p class=MsoNormal><span lang=EN-US>|___pages/</span></p>
+  <p class=MsoNormal><span lang=EN-US>|       |___page1.js</span></p>
+  <p class=MsoNormal><span lang=EN-US>|       |___page1.html</span></p>
+  <p class=MsoNormal><span lang=EN-US>|       |___page1.css</span></p>
+  <p class=MsoNormal><span lang=EN-US>|___widgets/</span></p>
+  <p class=MsoNormal><span lang=EN-US>|       |___widget1.js</span></p>
+  <p class=MsoNormal><span lang=EN-US>|       |___widget1.html</span></p>
+  <p class=MsoNormal><span lang=EN-US>|       |___widget1.css</span></p>
+  </td>
+ </tr>
+</table>
+<h2>
+<p class=MsoNormal><span lang=EN-US>5 Manifest</span></p>
+</h2>
+<p class=MsoNormal>与<span lang=EN-US>MiniApp page</span>类似，<span lang=EN-US>MiniApp
+widget</span>相关的<span lang=EN-US>metadata</span>也在<span lang=EN-US>manifest.json</span>文件中定义，符合<span
+lang=EN-US><a href="https://w3c.github.io/miniapp-manifest/">Miniapp Manifest</a></span>标准规范。</p>
+
+<p class=MsoNormal><span lang=EN-US>Similar to the MiniApp page, the metadata
+related to the MiniApp widget is also defined in the manifest.json file, which
+meets to the <a href="https://w3c.github.io/miniapp-manifest/">Miniapp Manifest</a>
+specification.</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>6 Widget lifecycle</span></p>
+</h2>
+<p class=MsoNormal><span lang=EN-US>MiniApp widget</span>通常会遇到的生命周期事件包含如下<span
+lang=EN-US>6</span>个事件，大部分与<span lang=EN-US><a
+href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-events">MiniApp
+page</a></span>的生命周期事件一致，</p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget loading</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget update</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget first render ready</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget running in foreground</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget running in background</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget unloading</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget</span>沿用<span lang=EN-US>MiniApp
+page</span>的<span lang=EN-US><a
+href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a></span>和<span
+lang=EN-US><a
+href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks"><span
+lang=EN-US><span lang=EN-US>生命周期接口及回调</span></span></a></span>，<span
+lang=EN-US>MiniApp widget</span>增加了<span lang=EN-US>update</span>生命周期事件，具体描述在<span
+lang=EN-US>6.4 MiniApp widget</span>更新过程处理。</p>
+
+<p class=MsoNormal><span lang=EN-US>The lifecycle events that MiniApp widgets
+usually encounter include the following six events, most of which are
+consistent with the lifecycle events of the MiniApp page:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget loading</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget update</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget first render ready</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget running in foreground</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget running in background</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget unloading</span></p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp widget follows the <a
+href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a>
+and <a
+href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks">lifecycle
+interfaces and callbacks</a> of MiniApp page. The MiniApp widget adds the
+update lifecycle event, which is described in 6.4.</span></p>
+<h3>
+<p class=MsoNormal><span lang=EN-US>6.1 Miniapp widget loading process</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>User agent</span>加载<span lang=EN-US>MiniApp
+widget</span>并显示的过程如下：</p>
+
+<p class=MsoNormal>根据<span lang=EN-US><a
+href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a></span>规范解析<span
+lang=EN-US>URI</span>，获取<span lang=EN-US>id</span>、<span lang=EN-US>version</span>、<span
+lang=EN-US>path</span>、<span lang=EN-US> query </span>和<span lang=EN-US>
+fragment</span>等字段</p>
+
+<p class=MsoNormal>根据<span lang=EN-US>id</span>和<span lang=EN-US>version</span>判断是否需要从服务器获取<span
+lang=EN-US>MiniApp</span>包，如果本地不存在<span lang=EN-US>MiniApp</span>包或者需要更新，<span
+lang=EN-US>user agent</span>会从服务器下载，并按照<span lang=EN-US><a
+href="https://w3c.github.io/miniapp-packaging">MiniApp Packaging</a></span>规范解析和安装<span
+lang=EN-US>MiniApp</span>包</p>
+
+<p class=MsoNormal>根据<span lang=EN-US><a
+href="https://w3c.github.io/miniapp-manifest">MiniApp manifest</a></span>规范解析<span
+lang=EN-US>manifest</span>文件，获取其中<span lang=EN-US>widgets</span>字段</p>
+
+<p class=MsoNormal>根据<span lang=EN-US>URI</span>的<span lang=EN-US>path</span>字段获取<span
+lang=EN-US>widgets</span>对应的<span lang=EN-US>min_code</span>、<span lang=EN-US>path</span></p>
+
+<p class=MsoNormal>判断<span lang=EN-US>widgets</span>的<span lang=EN-US>min_code </span>是否小于等于当前<span
+lang=EN-US>user agent</span>支持<span lang=EN-US>MiniApp</span>标准的版本，如果否，则返回错误</p>
+
+<p class=MsoNormal>创建执行引擎<span lang=EN-US>Logic Layer</span>和渲染引擎<span
+lang=EN-US>View Layer</span>。同时按照输入数据，指定<span lang=EN-US>widget</span>所在窗口的属性</p>
+
+<p class=MsoNormal><span lang=EN-US>Logic Layer</span>和<span lang=EN-US>View
+Layer</span>同时开始加载<span lang=EN-US>widgets[path]</span>对应的文件，并进行初始化，加载完文件后触发<span
+lang=EN-US>MiniApp widget loading</span>，并建立两个<span lang=EN-US>Layer</span>之间的通信通道</p>
+
+<p class=MsoNormal>通信通道建立完成后，<span lang=EN-US>Logic Layer</span>发送初始数据到<span
+lang=EN-US>View Layer</span>，开始<span lang=EN-US>first render</span></p>
+
+<p class=MsoNormal><span lang=EN-US>View Layer</span>完成<span lang=EN-US>first
+render</span>之后，触发<span lang=EN-US>MiniApp widget first render ready</span>事件</p>
+
+<p class=MsoNormal>当界面显示出来时，触发<span lang=EN-US>MiniApp widget running in foreground</span>事件</p>
+
+<p class=MsoNormal><span lang=EN-US>The process of loading and displaying
+MiniApp widget by User agent is as follows:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Parse the URI according to the <a
+href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a>
+specification to obtain fields such as id, version, path, query and fragment.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Determine whether the MiniApp package needs
+to be obtained from the server according to the id and version. If the MiniApp
+package does not exist locally or needs to be updated, user agent will download
+it from the server, and parse and install the MiniApp package according to the <a
+href="https://w3c.github.io/miniapp-packaging">MiniApp Packaging</a>
+specification.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Parse the manifest file according to the <a
+href="https://w3c.github.io/miniapp-manifest">MiniApp manifest</a>
+specification and get the widgets fields.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Obtain the corresponding min_code and path
+fields of the widgets according to the path field of the URI.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Determine whether the min_code of widgets
+is less than or equal to the version of MiniApp standard the current user agent
+supports. If not, return an error.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Create the execution engine Logic Layer and
+the rendering engine View Layer. At the same time, according to the input data,
+specify the properties of the window where the widget is located.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Logic Layer and View Layer start to load
+the files corresponding to widgets[path] simultaneously and initialize it.
+After loading the file, MiniApp widget loading is triggered, and a
+communication channel between the two Layers is established.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>After the communication channel is
+established, the Logic Layer sends the initial data to the View Layer and
+starts the first render.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>After the View Layer completes the first
+render, trigger the MiniApp widget first render ready event.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>When the interface is displayed, trigger
+the MiniApp widget running in foreground event.</span></p>
+<h3>
+<p class=MsoNormal><span lang=EN-US>6.2 MiniApp widget unloading process</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>User agent</span>将<span lang=EN-US>widget</span>从界面移除并不再使用的情况下，会触发关闭过程</p>
+
+<p class=MsoNormal>触发<span lang=EN-US>MiniApp widget running in background</span>事件</p>
+
+<p class=MsoNormal><span lang=EN-US>user agent</span>关闭<span lang=EN-US>widget</span>所在窗口和渲染引擎<span
+lang=EN-US>View Layer</span></p>
+
+<p class=MsoNormal>触发<span lang=EN-US>MiniApp widget unloading</span>事件</p>
+
+<p class=MsoNormal><span lang=EN-US>user agent</span>关闭执行引擎<span lang=EN-US>Logic
+Layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>When user agent removes the widget from the
+interface and is no longer using it, it will trigger the unloading process</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Trigger MiniApp widget running in
+background event</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The user agent closes the window where the
+widget is located and the rendering engine View Layer</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Trigger the MiniApp widget unloading event</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The user agent closes the execution engine
+Logic Layer</span></p>
+<h3>
+<p class=MsoNormal><span lang=EN-US>6.3 MiniApp widget switch between
+foreground and background process</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>MiniApp widget</span>相比于<span lang=EN-US>MiniApp
+page</span>，会因为更多的原因不可见，这时<span lang=EN-US>MiniApp widget</span>的<span
+lang=EN-US>running in background</span>事件会被触发，例如：</p>
+
+<p class=MsoNormal><span lang=EN-US>widget </span>被用户移出可见区域</p>
+
+<p class=MsoNormal><span lang=EN-US>widget </span>被折叠</p>
+
+<p class=MsoNormal><span lang=EN-US>widget </span>被其他<span lang=EN-US>widget</span>完全覆盖</p>
+
+<p class=MsoNormal><span lang=EN-US>widget </span>所在的<span lang=EN-US>host
+environment</span>进入<span lang=EN-US>background</span></p>
+
+<p class=MsoNormal>当<span lang=EN-US>MiniApp widget</span>重新可见时，<span
+lang=EN-US>running in foreground</span>事件会被触发。</p>
+
+<p class=MsoNormal><span lang=EN-US>Compared with MiniApp page, MiniApp widget
+will be invisible for more reasons. The the running in background event of
+MiniApp widget will be triggered, for example:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The widget is moved out of the visible area
+by user</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Widget is collapsed</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Widget is completely covered by other
+widget</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The host environment where the widget is
+located enters the background</span></p>
+
+<p class=MsoNormal><span lang=EN-US> The running in foreground event would be
+triggered when MiniApp widget becomes visible again.</span></p>
+<h3>
+<p class=MsoNormal><span lang=EN-US>6.4 MiniApp widget update process</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>User agent</span>可以在不重新创建<span lang=EN-US>widget</span>环境的情况下更新<span
+lang=EN-US>widget</span>的内容，这种情况常应用于<span lang=EN-US>widget</span>的<span
+lang=EN-US>Host environment</span>与<span lang=EN-US>widget</span>有强交互的情况，例如，在商品搜索结果页显示一个商品<span
+lang=EN-US>widget</span>时，用户点击另一个商品，该<span lang=EN-US>widget</span>的内容将被更新为新商品的。</p>
+
+<p class=MsoNormal>在这种场景下，处理过程如下：</p>
+
+<p class=MsoNormal><span lang=EN-US>Host environment</span>可通过符合<span
+lang=EN-US><a href="https://w3c.github.io/miniapp-addressing/">MiniApp
+Addressing</a></span>规范的<span lang=EN-US>URI</span>形式将数据发送到的特定<span lang=EN-US>MiniApp
+widget</span>实例</p>
+
+<p class=MsoNormal>如果此时<span lang=EN-US>MiniApp widget</span>处于<span
+lang=EN-US>foreground</span>状态，<span lang=EN-US>MiniApp widget update </span>事件会被触发</p>
+
+<p class=MsoNormal>如果此时<span lang=EN-US>MiniApp widget</span>处于<span
+lang=EN-US>background</span>状态，<span lang=EN-US>MiniApp widget update </span>事件会在下次<span
+lang=EN-US>MiniApp widget </span>再次可见时触发，此时<span lang=EN-US>running in
+foreground</span>事件会先于<span lang=EN-US>update </span>事件触发</p>
+
+<p class=MsoNormal><span lang=EN-US>User agent can update the content of the
+widget without recreating the widget environment. This often happens where the
+widget host environment has strong interaction with the widget. For example,
+when a product widget is displayed on search resualts page, user clicks on
+another product, the content of the widget will be updated with the infomation of
+the new product.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>In this scenario, the process is as
+follows:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The host environment can send data to a
+specific MiniApp widget instance in the form of a URI that conforms to the <a
+href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a>
+specification</span></p>
+
+<p class=MsoNormal><span lang=EN-US>If the MiniApp widget is in the foreground
+state at this time, the MiniApp widget update event will be triggered</span></p>
+
+<p class=MsoNormal><span lang=EN-US>If the MiniApp widget is in the background
+state at this time, the MiniApp widget update event will be triggered the next
+time the MiniApp widget is visible again, and the running in foreground event
+will be triggered before the update event</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>7 MiniApp widget obtains host environment
+information</span></p>
+</h2>
+<h3>
+<p class=MsoNormal><span lang=EN-US>7.1 Widget  obtains windows size</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>widget </span>可以获取窗口大小，方便应用做对应布局。在<span
+lang=EN-US>MiniApp</span>中，通过：<span lang=EN-US>window.screen </span>可以获取<span
+lang=EN-US>screen</span>信息。</p>
+
+<p class=MsoNormal><span lang=EN-US>The widget can get window size. This is
+convenient for widget to layout correspondingly. In MiniApp, screen information
+can be obtained through window.screen.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:-.3pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=566 valign=top style='width:425.2pt;border:solid windowtext 1.0pt;
+  padding:0cm .5pt 0cm .5pt'>
+  <p class=MsoNormal><span lang=EN-US>JavaScript</span></p>
+  <p class=MsoNormal><span lang=EN-US>// window.screen</span></p>
+  <p class=MsoNormal><span lang=EN-US>{</span></p>
+  <p class=MsoNormal><span lang=EN-US>  width:1920,</span></p>
+  <p class=MsoNormal><span lang=EN-US>  height:1080</span></p>
+  <p class=MsoNormal><span lang=EN-US>}</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US>widget</span>也可以通过注册回调函数，在窗口大小发生变化时被触发</p>
+
+<p class=MsoNormal><span lang=EN-US>Widgets can also be triggered when the
+window size changes by registering a callback function.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:-.3pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=566 valign=top style='width:425.2pt;border:solid windowtext 1.0pt;
+  padding:0cm .5pt 0cm .5pt'>
+  <p class=MsoNormal><span lang=EN-US>JavaScript</span></p>
+  <p class=MsoNormal><span lang=EN-US>window.addEventListener('resize',
+  e=&gt;{console.log(e)})</span></p>
+  <p class=MsoNormal><span lang=EN-US>window.onresize = function(e){}</span></p>
+  </td>
+ </tr>
+</table>
+<h3>
+<p class=MsoNormal><span lang=EN-US>7.2 Widget obtains host environment style</span></p>
+</h3>
+<p class=MsoNormal>宿主可能需要给所有在其中打开的<span lang=EN-US> MiniApp Widget </span>定义统一的样式风格，例如矩形边框统一使用圆角等。</p>
+
+<p class=MsoNormal><span lang=EN-US>The host may need to define a uniform style
+for all MiniApp Widgets opened in it, such as uniform use of rounded corners
+for rectangular borders, etc.</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>8 Data communication between MiniApp widget
+and MiniApp</span></p>
+</h2>
+<p class=MsoNormal>在一定情况下，<span lang=EN-US>Widget </span>需要与<span lang=EN-US>
+MiniApp </span>保持一定的数据通信，例如：</p>
+
+<p class=MsoNormal>在<span lang=EN-US> MiniApp </span>中已经登录，在<span lang=EN-US>
+Widget </span>保持同一登录状态</p>
+
+<p class=MsoNormal><span lang=EN-US>MiniApp </span>播放音乐，<span lang=EN-US>Widget
+</span>获取播放状态以显示播放控件</p>
+
+<p class=MsoNormal><span lang=EN-US>Under certain circumstances, widget needs
+to maintain certain data communication with MiniApp, for example:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Keeping the same login in state in widget
+when already logged in in MiniApp.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Widget gets playback status and display
+playback control when MiniApp is playing music.</span></p>
+<h3>
+<p class=MsoNormal><span lang=EN-US>8.1 Widget opens MiniApp page and pass
+parameters</span></p>
+</h3>
+<p class=MsoNormal>在<span lang=EN-US> MiniApp widget </span>中可通过<span
+lang=EN-US> open API </span>打开<span lang=EN-US> MiniApp </span>中的页面，并通过符合<span
+lang=EN-US><a href="https://w3c.github.io/miniapp-addressing/">Miniapp
+Addressing</a></span>标准的<span lang=EN-US>URI</span>传递数据到被打开的页面。</p>
+
+<p class=MsoNormal><span lang=EN-US>In MiniApp widget, the MiniApp page can be
+opened through the open API, and data is passed to the opened page through the
+URI that conforms to the <a href="https://w3c.github.io/miniapp-addressing/">Miniapp
+Addressing</a> standard.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='margin-left:-.3pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=566 valign=top style='width:425.2pt;border:solid windowtext 1.0pt;
+  padding:0cm .5pt 0cm .5pt'>
+  <p class=MsoNormal><span lang=EN-US>JavaScript</span></p>
+  <p class=MsoNormal><span lang=EN-US>window.open('platform://miniapp/foo/pages/detail?index=100')</span></p>
+  </td>
+ </tr>
+</table>
+<h3>
+<p class=MsoNormal><span lang=EN-US>8.2 Widget and the same MiniApp visit the
+same data/files</span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>Widget </span>和<span lang=EN-US> MiniApp </span>应该都可以访问<span
+lang=EN-US> MiniApp </span>包内的文件资源以及系统为<span lang=EN-US> MiniApp </span>分配的存储其相关数据和信息的文件。通过<span
+lang=EN-US> file feature </span>进行文件访问。</p>
+
+<p class=MsoNormal><span lang=EN-US>Both the Widget and the MiniApp should be
+able to access the file resources in the MiniApp package and the files
+allocated by the system for the MiniApp to store its related data and
+information. </span></p>
+<h3>
+<p class=MsoNormal><span lang=EN-US>8.3 Communication between Widget and
+MiniApp </span></p>
+</h3>
+<p class=MsoNormal><span lang=EN-US>Widget</span>和<span lang=EN-US>MiniApp</span>之间能够通过一系列<span
+lang=EN-US>API</span>进行通信。这可能涉及<span lang=EN-US>MiniApp</span>的后台运行和<span
+lang=EN-US>service</span>相关概念。</p>
+
+<p class=MsoNormal><span lang=EN-US>Widget and MiniApp can communicate through
+a series of APIs. This may involve MiniApp's background running and
+service-related concepts.</span></p>
+
+<h2>
+<p class=MsoNormal><span lang=EN-US>9 Conformance</span></p>
+</h2>
+<p class=MsoNormal>本规范中的所有内容均为本草案的规范性内容，但明确标记为<span lang=EN-US>“</span>非规范性<span
+lang=EN-US>”</span>的部分、示例和注释除外。</p>
+
+<p class=MsoNormal><span lang=EN-US>As well as sections marked as
+non-normative, all authoring guidelines, diagrams, examples, and notes in this
+specification are non-normative. Everything else in this specification is
+normative.</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>10 Privacy and Security</span></p>
+</h2>
+<p class=MsoNormal><span lang=EN-US>This section is non-normative.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+<h2>
+<p class=MsoNormal><span lang=EN-US>11 References</span></p>
+</h2>
+<p class=MsoNormal><span lang=EN-US><a
+href="https://lists.w3.org/Archives/Public/public-webapps/2018OctDec/0011.html">W3C
+Widget <span lang=EN-US><span lang=EN-US>标准废弃说明</span></span></a></span></p>
+
+<p class=MsoNormal><span lang=EN-US><a href="https://w3c.github.io/miniapp/">MiniApp
+Specifications</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US><a
+href="https://www.w3.org/TR/miniapp-manifest/">MiniApp Manifest</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US><a
+href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US><a
+href="https://www.w3.org/TR/miniapp-lifecycle/">MiniApp Lifecycle</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US><a
+href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
