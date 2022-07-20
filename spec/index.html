@@ -137,7 +137,7 @@
   <section id='usecase'>
     <h2>
       <span its-locale-filter-list="en" lang="en">Use cases</span>
-      <span its-locale-filter-list="zh-hans" lang="zh-hans">介绍</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">用例</span>
     </h2>
 
     <p>This section is non-normative.</p>
@@ -273,7 +273,10 @@
     interfaces and callbacks</a> of MiniApp page. The MiniApp widget adds the update lifecycle event, which is described in 6.4.</p>
 
     <section id='loading-process'>
-      <h3>Miniapp widget loading process</h3>
+      <h3>
+      <span its-locale-filter-list="en" lang="en"> Miniapp widget loading process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget加载过程</span>
+      </h3>
 
       <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 加载 MiniApp widget 并显示的过程如下：</p>
       <p its-locale-filter-list="en" lang="en">The process of loading and displaying MiniApp widget by User agent is as follows: </p>
@@ -317,7 +320,10 @@
     </section>  
 
     <section id='unloading-process'>
-      <h3>MiniApp widget unloading process</h3>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp widget unloading process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget unloading过程</span>
+      </h3>
 
       <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 将 Widget 从界面移除并不再使用的情况下，会触发关闭过程:</p>
       <p its-locale-filter-list="en" lang="en">When user agent removes the widget from the interface and is no longer using it, it will trigger the unloading process:</p>
@@ -339,7 +345,10 @@
     </section>
 
     <section id='foreground-background-process'>
-      <h3>MiniApp widget switch between foreground and background process</h3>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp widget switch between foreground and background process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget在前台和后台见切换过程</span>  
+      </h3>
     
       <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget 相比于 MiniApp page ，会因为更多的原因不可见，这时 MiniApp widget 的
         running in background 事件会被触发，例如：</p>
@@ -365,7 +374,10 @@
     </section>
 
     <section id='update-process'>
-      <h3>MiniApp widget update process</h3>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp widget update process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget更新过程</span>   
+      </h3>
 
       <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 可以在不重新创建 Widget 环境的情况下更新 widget 的内容，这种情况常应用于 Widget 的 Host environment 与 Widget 有强交互的情况，
         例如，在商品搜索结果页显示一个商品 widget 时，用户点击另一个商品，该 Widget 的内容将被更新为新商品的。</p>
@@ -460,7 +472,10 @@
     </ul>
 
     <section id='open-page'>
-      <h3>Widget opens MiniApp page and pass parameters</h3>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Widget opens MiniApp page and pass parameters</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget打开MiniApp页面并传递参数和MinApp之间通信</span>  
+      </h3>
 
       <p its-locale-filter-list="zh-hans" lang="zh-hans">在 MiniApp widget 中可通过 open API 打开 MiniApp 中的页面，并通过符合<a href="https://w3c.github.io/miniapp-addressing/">Miniapp Addressing</a> 标准的 URI 传递数据到被打开的页面。</p>
       <p its-locale-filter-list="en" lang="en">In MiniApp widget, the MiniApp page can be opened through the open API, and data is passed to the opened page through the
@@ -472,7 +487,10 @@
     </section>
 
     <section id='file-data'>
-      <h3>Widget and the same MiniApp visit the same data/files</h3>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Widget and the same MiniApp visit the same data/files</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一数据/文件</span>
+      </h3>
 
       <p its-locale-filter-list="zh-hans" lang="zh-hans">同一个 id 的 Widget 和 MiniApp 应该都可以访问 MiniApp 包内的文件资源以及系统为 MiniApp 分配的存储其相关数据和信息的文件。通过 File API 进行文件访问。</p>
       <p its-locale-filter-list="en" lang="en">Widget and the MiniApp with same id should be able to access the file resources in the MiniApp package and the files
@@ -480,7 +498,10 @@
     </section>
 
     <section id='communication'>
-      <h3>Communication between Widget and MiniApp</h3>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Communication between Widget and MiniApp</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和MiniApp间的通讯</span>
+      </h3>
       
       <p its-locale-filter-list="zh-hans" lang="zh-hans">Widget 和 MiniApp 之间能够通过一系列 API 进行通信。这会涉及 MiniApp 的后台运行和service相关概念。</p>
       <p its-locale-filter-list="en" lang="en">Widget and MiniApp can communicate through a series of APIs. This will involve MiniApp's background running and service concepts.</p>
@@ -488,11 +509,18 @@
   </section>
 
   <section>
-    <h2>Security considerations</h2>
+    <h2>
+     <span its-locale-filter-list="en" lang="en">Security considerations</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">安全考虑</span>  
+      </h2>
   </section>
 
   <section>
-    <h2>Privacy considerations</h2>
+    <h2>
+     <span its-locale-filter-list="en" lang="en">Privacy considerations</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">隐私考虑</span>  
+      
+     </h2>
   </section>
 
   <section class="appendix" id="conformance">
