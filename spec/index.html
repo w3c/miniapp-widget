@@ -382,8 +382,6 @@
         <li>The logic layer of the widget can obtain the query in the new url when receiving the update event, and update the interface after logic processing (for example, using the fields in the query to inquire about the content on the server)</li>
       </ol>
     </section>
-  </section>
-
 <section id='lifecycle-interface-and-callbacks'>
       <h3>
       <span its-locale-filter-list="en" lang="en">MiniApp Widget lifecycle interface and callbacks</span>
@@ -419,6 +417,8 @@ page.onupdate = doUpdate;
   </pre>
     
     </section>
+  </section>
+
 
 
   <section id='hostenv'>
@@ -507,9 +507,7 @@ page.onupdate = doUpdate;
       <p its-locale-filter-list="zh-hans" lang="zh-hans">同一个 id 的 Widget 和 MiniApp 应该都可以访问 MiniApp 包内的文件资源以及系统为 MiniApp 分配的存储其相关数据和信息的文件。通过 File API 进行文件访问。对于同一个id的Widget和MiniApp，访问同一数据和文件的权限保持一致。</p>
       <p its-locale-filter-list="en" lang="en">Widget and the MiniApp with same id should be able to access the file resources in the MiniApp package and the files
       allocated by the system for the MiniApp to store its related data and information.For Widgets and MiniApp with the same id, the permissions to access the same data and files remain the same.</p>
-    </section>
-    
-     <section id='local-data'>
+        <section id='local-data'>
       <h4>
       <span its-locale-filter-list="en" lang="en">Visit locally stored data</span>
       <span its-locale-filter-list="zh-hans" lang="zh-hans">访问本地数据</span>
@@ -585,6 +583,9 @@ reader.onload = () => {
 reader.readAsText(file);
       </pre> 
    </section>     
+    </section>
+    
+
       
     
     <section id='communication'>
