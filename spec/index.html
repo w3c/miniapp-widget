@@ -362,22 +362,64 @@
       <p its-locale-filter-list="en" lang="en">In this scenario, the process is as follows:</p>
 
       <ol its-locale-filter-list="zh-hans" lang="zh-hans">
-        <li>Host environment 可通过符合<a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> 规范的 URI
-          形式将数据发送到的特定 MiniApp widget 实例</li>
+        <li>Host environment将符合<a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> 规范的URI发给user agent</li>
+        <li>User agent识别该url是否为已经打开的widget，如果不是，则触发新的loading过程</li>
+        <li>如果是已经打开的实例，则user agent会将该URI发送给该实例</li>
         <li>如果此时 MiniApp widget 处于 foreground 状态， MiniApp widget update 事件会被触发</li>
         <li>如果此时 MiniApp widget 处于 background 状态， MiniApp widget update 事件会在下次 MiniApp widget 再次可见时触发，此时 running in foreground
           事件会先于 update 事件触发</li>
+        <li>widget 的logic layer在接受到update事件时可以获取新url中的qurey，进行逻辑处理之后（例如使用query中的字段查询服务器上的内容）更新界面</li>
       </ol>
 
       <ol its-locale-filter-list="en" lang="en">
-        <li>The host environment can send data to a specific MiniApp widget instance in the form of a URI that conforms to the
-          <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> specification </li>
+        <li>The Host environment sends a URI that conforms to the
+          <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a>specification to the user agent</li>
+        <li>User agent identifies whether the url is an already opened widget. If not, it triggers a new loading process</li>
+        <li>If it is an already opened instance, user agent will send the URI to this instance</li>
         <li>If the MiniApp widget is in the foreground state at this time, the MiniApp widget update event will be triggered</li>
         <li>If the MiniApp widget is in the background state at this time, the MiniApp widget update event will be triggered
           the next time the MiniApp widget is visible again, and the running in foreground event will be triggered before the update  event </li>
+        <li>The logic layer of the widget can obtain the query in the new url when receiving the update event, and update the interface after logic processing (for example, using the fields in the query to inquire about the content on the server)</li>
       </ol>
     </section>
   </section>
+
+<section id='lifecycle-interface-and-callbacks'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp Widget lifecycle interface and callbacks</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget生命周期接口和回调</span>
+      </h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget的loading、first render ready、running in foreground、running in background、unloading事件与page一致，因此对应的生命周期的接口与回调也与沿用了MiniApp page的<a href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a>和<a href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks">生命周期接口及回调</a>。</p>
+      <p its-locale-filter-list="en" lang="en">The loading, first render ready, running in foreground, running in background and unloading events of the MiniApp widget are consistent with the page. So the corresponding lifecycle interfaces and callbacks also follow the <a href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a> and <a href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks">lifecycle interfaces and callbacks</a> of the MiniApp page.</p>
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp的update事件并不会触发页面状态的变化，页面仍然会保留在‘shown’状态。该事件发生时，会触发onupdate回调。</p>
+      <p its-locale-filter-list="en" lang="en">The update event of MiniApp does not trigger the change of the page state, the page will remain in the 'shown' state. When this event occurs, the onupdate callback is triggered.</p>
+ 
+  <pre class="JavaScript">
+EXAMPLE 3: 在Widget上注册update事件
+EXAMPLE 3: register update event on MiniApp Widget
+
+const doUpdate = (event) => {
+  // 解析url的输入
+  // 获取新的数据
+  // 更新界面
+};
+
+page.addEventListener('update', doUpdate);
+page.onupdate = doUpdate;
+  </pre>
+ 
+  <p its-locale-filter-list="zh-hans" lang="zh-hans">示例如下：</p>
+  <p its-locale-filter-list="en" lang="en">An example is as follows:</p>
+  
+  <pre class="JavaScript">
+  partial interface Page {
+  attribute EventHandler onupdate;
+  };
+  </pre>
+    
+    </section>
+
 
   <section id='hostenv'>
     <h2>
@@ -462,11 +504,89 @@
       <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一数据/文件</span>
       </h3>
 
-      <p its-locale-filter-list="zh-hans" lang="zh-hans">同一个 id 的 Widget 和 MiniApp 应该都可以访问 MiniApp 包内的文件资源以及系统为 MiniApp 分配的存储其相关数据和信息的文件。通过 File API 进行文件访问。</p>
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">同一个 id 的 Widget 和 MiniApp 应该都可以访问 MiniApp 包内的文件资源以及系统为 MiniApp 分配的存储其相关数据和信息的文件。通过 File API 进行文件访问。对于同一个id的Widget和MiniApp，访问同一数据和文件的权限保持一致。</p>
       <p its-locale-filter-list="en" lang="en">Widget and the MiniApp with same id should be able to access the file resources in the MiniApp package and the files
-      allocated by the system for the MiniApp to store its related data and information.</p>
+      allocated by the system for the MiniApp to store its related data and information.For Widgets and MiniApp with the same id, the permissions to access the same data and files remain the same.</p>
+    </section>
+    
+     <section id='local-data'>
+      <h4>
+      <span its-locale-filter-list="en" lang="en">Visit locally stored data</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">访问本地数据</span>
+      </h4>
+  <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面都可以通过user agent读写在本地保存的数据，没有过期时间。MiniApp Widget和MiniApp可以通过localStorage接口来访问这些数据。示例如下：</p>
+      <p its-locale-filter-list="en" lang="en">Both the MiniApp Widget and the MiniApp page can read and write locally saved data through the user agent with no expiration time. MiniApp Widget and MiniApp can access these data through the localStorage interface. An example is as follows:</p>
+    
+        <pre class="JavaScript">
+         // Example
+// Create a localStorage name/value pair with name="lastname" and value="Smith"
+localStorage.setItem("lastname", "Smith");
+// or
+localStorage.lastname = "Smith";
+// Remove the "lastname" localStorage item
+localStorage.removeItem("lastname");
+// Retrieve the value of "lastname" and use it
+const name = localStorage.lastname;
+// or
+const name = localStorage.getItem("lastname");
+      </pre>  
     </section>
 
+    <section id='local-file'>
+      <h4>
+      <span its-locale-filter-list="en" lang="en">Visit local files</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">访问本地文件</span>
+      </h4>
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面可以创建和访问存储在宿主环境中的用户本地文件，也可以访问应用安装包中的资源文件。这两类文件，可通过几类不同的URI来定位：</p>
+      <p its-locale-filter-list="en" lang="en">MiniApp Widget and MiniApp page can create and access user local files stored in the host environment, and can also access resource files in the application package. These two types of files can be located by several different types of URIs:</p>
+          
+      <pre class="JavaScript">
+         // 访问应用安装包资源文件的URI，MiniApp addressing形式
+platform://miniapp/foo/common/example.png
+
+// 访问应用安装包资源文件的URI，绝对和相对路径形式
+/common/example.png
+./common/example.png
+../common/example.png
+
+// 访问用户本地文件的URI
+internal://cache/foo.txt
+internal://files/foo.txt
+internal://tmp/foo.txt
+internal://mass/foo.txt
+      </pre> 
+      
+     <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面可以通过标签的src属性和File API对文件进行访问：</p>
+     <p its-locale-filter-list="zh-hans" lang="zh-hans">标签 src 属性示例：</p>
+     <p its-locale-filter-list="en" lang="en">MiniApp Widget and MiniApp page can access files through the src attribute of the tag and the File API:</p>
+     <p its-locale-filter-list="en" lang="en">Example of tag src attribute:</p>
+      
+      <pre class="JavaScript">
+         <image src="platform://miniapp/foo/common/example.png"></image>
+      </pre>    
+     
+  
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">通过File API创建和访问本地文件：</p>
+     <p its-locale-filter-list="en" lang="en">Create and access local files via the File API:</p>   
+
+          <pre class="JavaScript">
+        // 创建本地文件Creat local file
+var file = new File(["foo"], "internal://files/foo.txt", {
+  type: "text/plain",
+});
+// 读取本地文件Read local file
+const file = new File([], "internal://files/foo.txt", {
+  type: "text/plain",
+});
+const reader = new FileReader();
+reader.onload = () => {
+    console.log(reader.result);
+};
+reader.readAsText(file);
+      </pre> 
+   </section>     
+      
+    
     <section id='communication'>
       <h3>
       <span its-locale-filter-list="en" lang="en">Communication between Widget and MiniApp</span>
