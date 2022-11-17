@@ -493,26 +493,16 @@
       </pre>
     </section>
 
-    <section id='file-data'>
+    <section id='local-data'>
       <h3>
-      <span its-locale-filter-list="en" lang="en">Widget and the same MiniApp visit the same data/files</span>
-      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一数据/文件</span>
+      <span its-locale-filter-list="en" lang="en">Widget and the same MiniApp visit the same locally stored data</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一本地保存的数据</span>
       </h3>
 
-      <p its-locale-filter-list="zh-hans" lang="zh-hans">Widget 和 MiniApp 应该都可以访问 MiniApp 包内的文件资源以及系统为 MiniApp 分配的存储其相关数据和信息的文件。对于同一个id的Widget和MiniApp，访问同一数据和文件的权限保持一致。</p>
-      <p its-locale-filter-list="en" lang="en">Widget and the MiniApp should be able to access the file resources in the MiniApp package and the files
-        allocated by the system for the MiniApp to store its related data and information. For Widgets and MiniApp with the same id, the permissions to access the same data and files remain the same.</p>
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">iniApp Widget和MiniApp页面都可以通过user agent读写在本地保存的数据，没有过期时间。MiniApp Widget和MiniApp可以通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口来访问这些数据。对于同一个<a href="https://www.w3.org/TR/miniapp-manifest/#dfn-app_id">app_id</a>的Widget和MiniApp，通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口可以访问到相同的数据，示例如下：</p>
+      <p its-locale-filter-list="en" lang="en">Both MiniApp Widget and MiniApp pages can read and write locally stored data through user agent with no expiration time. MiniApp Widget and MiniApp can access this data through <a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a> interface. For widgets and MiniApps of the same <a href="https://www.w3.org/TR/miniapp-manifest/#dfn-app_id">app_id</a>, the same data can be accessed through the <a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a> interface, as follows:</p>
       
-      <section id='local-data'>
-        <h4>
-        <span its-locale-filter-list="en" lang="en">Visit locally stored data</span>
-        <span its-locale-filter-list="zh-hans" lang="zh-hans">访问本地数据</span>
-        </h4>
-        
-        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面都可以通过user agent读写在本地保存的数据，没有过期时间。MiniApp Widget和MiniApp可以通过localStorage接口来访问这些数据。示例如下：</p>
-        <p its-locale-filter-list="en" lang="en">Both the MiniApp Widget and the MiniApp page can read and write locally saved data through the user agent with no expiration time. MiniApp Widget and MiniApp can access these data through the localStorage interface. An example is as follows:</p>
-    
-        <pre class="example js" title="access data with localStorage | 通过localStorage接口访问数据">
+	    <pre class="example js" title="access data with localStorage | 通过localStorage接口访问数据">
           // Create a localStorage name/value pair with name="lastname" and value="Smith"
           localStorage.setItem("lastname", "Smith");
           // or
@@ -524,52 +514,102 @@
           // or
           const name = localStorage.getItem("lastname");
         </pre>  
+
+    <section id='local-file'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Widget and the same MiniApp visit the same file</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一文件</span>
+      </h3>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面可以创建和访问存储在user agent中的用户本地文件，也可以访问应用安装包中的资源文件。</p>
+        <p its-locale-filter-list="en" lang="en">MiniApp Widget and MiniApp page can create and access user local files stored in the user agent, and can also access resource files in the application package.</p>
+
+<p its-locale-filter-list="zh-hans" lang="zh-hans">通常MiniApp Widget可以创建和访问几类文件：</p>
+	<ul its-locale-filter-list="zh-hans" lang="zh-hans">
+		<li>通过URL描述的在线文件，例如image组件显示在线图片，通常以标准的http/https scheme定义</li>
+		<li>在MiniApp安装包中的资源文件，例如MiniApp安装包中的图片资源</li>
+		<li>存储在user agent中当前MiniApp data目录下的本地文件，这些文件通常是通过MiniApp API产生的，仅能有当前MiniApp访问。例如从服务器上下载或者由用户创建的文件</li>
+	</ul>
+
+    <ul its-locale-filter-list="en" lang="en">
+		<li>Online files described by URL, such as image components that display online images, usually defined in standard http/https schemes</li>
+		<li>Resource files in the MiniApp installation package, such as image resources</li>
+		<li>Local files stored in the current MiniApp data directory in the user agent, usually generated through the MiniApp API and accessible only to the current MiniApp. For example, files downloaded from a server or created by a user</li>	
+	</ul>
+	
+	<p its-locale-filter-list="zh-hans" lang="zh-hans">针对不同类型的文件，可以采用多种URL形式来指定。</p>
+        <p its-locale-filter-list="en" lang="en">For different types of files, multiple URL forms cpuld be used.</p>
+	
+      <section id='url'>
+        <h4>
+        <span its-locale-filter-list="en" lang="en">URL for addressing resource files in MiniApp package</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp安装包中资源文件的URL</span>
+        </h4>
+        
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp 包中包含的资源文件可以通过<a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a>规范定义的URL scheme进行定位。</p>
+        <p its-locale-filter-list="en" lang="en">Resource files contained in a MiniApp package can be located through the URL scheme defined by the <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> specification.</p>
+    
+		<pre class="example js" title="Example: MiniApp addressing形式访问应用安装包资源文件">
+          platform://miniapp/foo/common/example.png
+        </pre>  
+
+	     <p its-locale-filter-list="zh-hans" lang="zh-hans">类似于<a href="https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2">HTML relative URL</a>，MiniApp包中的资源也可以通过相对路径形式进行定位：</p>
+        <p its-locale-filter-list="en" lang="en">Similar to <a href="https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2">HTML relative URL</a>, resources in a MiniApp package can also be located as relative paths:</p>
+		
+		<pre class="example js" title="Example: 访问应用安装包资源文件的URI，绝对和相对路径形式">
+        // For widget platform://miniapp/foo/widgets/index
+		common/example.png // complete URL：platform://miniapp/foo/widgets/common/example.png
+		../common/example.png // complete URL：URL：platform://miniapp/foo/common/example.png
+        </pre>  
       </section>
 
       <section id='local-file'>
         <h4>
-        <span its-locale-filter-list="en" lang="en">Visit local files</span>
-        <span its-locale-filter-list="zh-hans" lang="zh-hans">访问本地文件</span>
+        <span its-locale-filter-list="en" lang="en">MiniApp private local files</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp的私有本地文件</span>
         </h4>
 
-        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面可以创建和访问存储在宿主环境中的用户本地文件，也可以访问应用安装包中的资源文件。这两类文件，可通过几类不同的URI来定位：</p>
-        <p its-locale-filter-list="en" lang="en">MiniApp Widget and MiniApp page can create and access user local files stored in the host environment, and can also access resource files in the application package. These two types of files can be located by several different types of URIs:</p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">对每一个MiniApp，User agent 必须提供一个目录，用于存储user agent运行过程中产生的用户文件。MiniApp只可以在该目录下创建和访问文件，不能访问该目录以外的文件。MiniApp可以通过internal: URL访问私有文件。internal: URL 语法定义如下：
+</p>
+        <p its-locale-filter-list="en" lang="en">For each MiniApp, the User agent must provide a directory to store the user files generated during the operation of the user agent. MiniApp can only create and access files in that directory, not files outside of that directory. MiniApp can access private files via internal: URL.Internal: URL syntax is defined as follows:
+</p>
           
-        <pre class="example js" title="some URI examples | 几种URI的示例">
-          // 访问应用安装包资源文件的URI，MiniApp addressing形式
-          platform://miniapp/foo/common/example.png
-
-          // 访问应用安装包资源文件的URI，绝对和相对路径形式
-          /common/example.png
-          ./common/example.png
-          ../common/example.png
-
-          // 访问用户本地文件的URI
-          internal://cache/foo.txt
-          internal://files/foo.txt
-          internal://tmp/foo.txt
-          internal://mass/foo.txt
+        <pre class="example js" title="">
+			internaluri   = uri-prefix path-abempty
+			uri-prefix    = "internal://"
         </pre> 
       
-        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面可以通过标签的src属性和File API对文件进行访问：</p>
-        <p its-locale-filter-list="en" lang="en">MiniApp Widget and MiniApp page can access files through the src attribute of the tag and the File API:</p>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">以下是internal: URL的示例：</p>
+        <p its-locale-filter-list="en" lang="en">An example of an internal: URL:</p>
+		
+		<pre class="example js" title="Example: 访问用户本地文件URL">
+			internal://path/to/file
+        </pre> 
+      </section>
 
-        <p its-locale-filter-list="zh-hans" lang="zh-hans">标签 src 属性示例：</p>
-        <p its-locale-filter-list="en" lang="en">Example of tag src attribute:</p>
-      
-        <pre class="example html" title="example of src attribute | src 属性示例">
-          &lt;image src="platform://miniapp/foo/common/example.png" />
-        </pre>    
-      
-        <p its-locale-filter-list="zh-hans" lang="zh-hans">通过File API创建和访问本地文件：</p>
-        <p its-locale-filter-list="en" lang="en">Create and access local files via the File API:</p>   
+      <section id='file-ui'>
+        <h4>
+        <span its-locale-filter-list="en" lang="en">File access in UI components & APIs</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">通过UI组件和API访问文件</span>
+        </h4>
+		
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">一些MiniApp Widget 的 UI components和API 可以通过属性和参数对文件进行访问，例如image 组件的的 src 属性：</p>
+        <p its-locale-filter-list="en" lang="en">MiniApp Widget and MiniApp page can access files through the src attribute of the tag and the File API，Example of tag src attribute:</p>
+		
+		 <pre class="example js" title="Example: example of src attribute | src 属性示例">
+			<image src="platform://miniapp/foo/common/example.png" />
+        </pre> 
+      </section>
 
+      <section id='file-ui'>
+        <h4>
+        <span its-locale-filter-list="en" lang="en">Access file with File API</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">通过文件API访问文件</span>
+        </h4>
+
+	        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp可以通过 <a href="https://www.w3.org/TR/FileAPI/">File API</a>访问本地文件。</p>
+        <p its-locale-filter-list="en" lang="en">Access local files via the <a href="https://www.w3.org/TR/FileAPI/">File API</a>:</p>
         <pre class="example js" title="access file with File API | 通过File API访问文件">
-          // 创建本地文件Creat local file
-          var file = new File(["foo"], "internal://files/foo.txt", {
-            type: "text/plain",
-          });
-          // 读取本地文件Read local file
+         // 读取本地文件Read local file
           const file = new File([], "internal://files/foo.txt", {
             type: "text/plain",
           });
@@ -578,33 +618,36 @@
               console.log(reader.result);
           };
           reader.readAsText(file);
-        </pre> 
-      </section>     
-    </section>
-    
-    <section id='communication'>
-      <h3>
-      <span its-locale-filter-list="en" lang="en">Communication between Widget and MiniApp</span>
-      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和MiniApp间的通讯</span>
-      </h3>
-      
-      <p its-locale-filter-list="zh-hans" lang="zh-hans">Widget 和 MiniApp 之间能够通过一系列 API 进行通信。这会涉及 MiniApp 的后台运行和service相关概念。</p>
-      <p its-locale-filter-list="en" lang="en">Widget and MiniApp can communicate through a series of APIs. This will involve MiniApp's background running and service concepts.</p>
-    </section>
-  </section>
+        </pre> 		
+      </section>
+	
+		
 
   <section>
     <h2>
      <span its-locale-filter-list="en" lang="en">Security considerations</span>
       <span its-locale-filter-list="zh-hans" lang="zh-hans">安全考虑</span>  
       </h2>
+	    <p its-locale-filter-list="zh-hans" lang="zh-hans">由于widget的packaging、addressing和manifest与MiniApp page类似，因此widget的安全考虑宜参考MiniApp packaging、addressing和manifest中的安全考虑。此外：</p>
+    <p its-locale-filter-list="en" lang="en">Since the packaging, addressing, and manifest of widgets are similar to MiniApp pages, the security considerations of widgets should refer to the security considerations in MiniApp packaging, addressing, and manifest. Furthermore:</p>
+      <ul its-locale-filter-list="zh-hans" lang="zh-hans">
+		<li>由于MiniApp widget的界面显示在Host Environment中，user agent应该保障Host Environment和MiniApp widget的数据隔离</li>
+		<li>由于MiniApp widget可以访问MiniApp的本地数据，user agents应该确保控制MiniApp Widget可访问的文件范围</li>
+	</ul>
+
+     <ul its-locale-filter-list="en" lang="en">
+		<li>Since the interface of the MiniApp widget is displayed in the Host Environment, the user agent should ensure data isolation between the Host Environment and the MiniApp widget.</li>
+		<li>Since the MiniApp widget has access to MiniApp's local data, user agents should ensure control over the range of files that the MiniApp widget can access.</li>
+	</ul>	  
   </section>
 
   <section>
     <h2>
      <span its-locale-filter-list="en" lang="en">Privacy considerations</span>
       <span its-locale-filter-list="zh-hans" lang="zh-hans">隐私考虑</span>  
-      
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">由于widget的packaging、addressing和manifest与 MiniApp page 类似，因此widget的隐私考虑宜参考MiniApp packaging、addressing和manifest中的隐私考虑。</p>
+    <p its-locale-filter-list="en" lang="en">Since the packaging, addressing, and manifest of widgets are similar to MiniApp pages, the privacy considerations of widgets should refer to the privacy considerations in MiniApp packaging, addressing and manifest.</p>
+
      </h2>
   </section>
 
@@ -627,6 +670,9 @@
       <li><a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a></li>
       <li><a href="https://www.w3.org/TR/miniapp-lifecycle/">MiniApp Lifecycle</a></li>
       <li><a href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a></li>
+      <li><a href="https://www.w3.org/TR/FileAPI/">W3C File API</a></li>
+      <li><a href="https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2">W3C HTML and URLs</a></li>
+      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">HTML Storage Interface</a></li>
     </ol>
   </section>
 
