@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>MiniApp Widget</title>
+
+  <link rel="stylesheet" href="local.css" />
+
+  <script async class="remove" src="https://www.w3.org/Tools/respec/respec-w3c"></script>
+  <script defer src="script.js"></script>
+
+  <script class="remove">
+    var respecConfig = {
+      specStatus: "CG-DRAFT",
+
+      editors: [{
+        name: "Yinli Chen",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 117298
+      }, {
+        name: "Xiaoping Zhao",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 137575
+      }, {
+        name: "Bingqing Zhou",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 136431
+      }, {
+        name: "Canfeng Chen",
+        companyURL: "https://www.mi.com/",
+        company: "Xiaomi",
+        w3cid: 124040
+      }],
+
+      group: "cg/miniapps",
+      github: {
+        repoURL: "https://github.com/w3c/miniapp-widget",
+        branch: "main",
+      },
+    };
+  </script>
+</head>
+
+<body>
+  <section id='abstract'>
+    <p its-locale-filter-list="en" lang="en">
+      The MiniApp Widget is a special form of <a href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp Page</a>.
+        Unlike a page, a widget can occupy a certain area instead of the entire screen.
+        It is used to display key information and respond to simple user operations,
+        such as displaying the weather at the user’s current location, or tracking the
+        user’s current travel status and providing further actions.
+    </p>
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">
+      MiniApp Widget是<a href="https://www.w3.org/TR/miniapp-packaging/#dfn-page">MiniApp 页面</a>的一种特殊形式。
+      与页面不同，widget可以仅占用屏幕的部分区域（而不是全部），用于为用户显示关键信息和响应简单的用户操作，例如显示用户所在地的天气，跟踪用户当前的行程状态并提供进一步的操作。
+    </p>
+    <p its-locale-filter-list="en" lang="en">
+      This specification defines addressing, packaging, manifest and lifecycle for a MiniApp Widget. The interaction and communication between MiniApp widget and MiniApp or host environment are also defined.
+    </p>
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">
+      本标准规定了MiniApp Widget的addressing、packaging、manifest和lifecycle要求，还规定了MiniApp widget与MiniApp或与宿主环境间进行互动交流的要求。
+    </p>
+  </section>
+
+  <section id='sotd'>
+    <p id="langSwitch">
+      <button onclick="switchLang('zh-hans')" lang="zh-hans">简体中文</button>
+      <button onclick="switchLang('en')" lang="en">English</button>
+      <button onclick="switchLang('all')" lang="en">All</button>
+    </p>
+  </section>
+
+  <section id='introduction'>
+    <h2>
+      <span its-locale-filter-list="en" lang="en">Introduction</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">介绍</span>
+    </h2>
+
+    <section id='overview'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Overview</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">概述</span>
+      </h3>
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget 是 MiniApp页面的一种特殊形式。与页面不同，widget可以仅占用屏幕的部分区域（而不是全部），
+        用于为用户显示关键信息和响应简单的用户操作，例如显示用户所在地的天气，跟踪用户当前的行程状态并提供进一步的操作。</p>
+  
+      <p its-locale-filter-list="en" lang="en">MiniApp widget is a special form of MiniApp page. Unlike pages, widgets can use only part of the screen (rather than all of
+      it) and are used to display key information to the user and respond to simple
+      user actions, such as displaying the weather at the user's location, tracking
+      user's current travel status and providing next actions .</p>
+	  
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">本标准的内容符合MiniApp Manifest、Packaging、Lifecycle和Addressing的标准要求，除此之外，还规定了MiniApp特有的生命周期事件，以及MiniApp widget与MiniApp或与宿主环境间进行互动交流的要求。</p>
+  
+      <p its-locale-filter-list="en" lang="en">This specification follows the specifications of MiniApp Manifest, Packaging, Lifecycle and Addressing. In addition, it defines the unique life cycle events of MiniApp and the requirements for the interaction between MiniApp widget and MiniApp or with the host environment.</p>
+	  
+	  
+	  
+    </section>
+
+    <section id='terminology'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Terminology</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">术语</span> 
+      </h3>
+      
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">下列术语适用于MiniApp Widgets。</p>
+      <p its-locale-filter-list="en" lang="en">The following terms are specific to MiniApp widgets.</p>
+      <dl class="termlist">
+        <dt><dfn id="dfn-miniapp" data-lt="MiniApps" data-dfn-type="dfn">MiniApp</dfn></dt>
+        <dd>A light software application, that can be distributed through any digital means, and accessed through the Web. 
+          MiniApps are defined by a concrete file structure, distributed within a single file that represents the whole MiniApp package that can be processed and executed by [=MiniApp user agents=].</dd>
+
+        <dt><dfn id="dfn-page" data-lt="pages|page|MiniApp pages" data-dfn-type="dfn">MiniApp page</dfn></dt>
+        <dd>A collection of information that is displayed in a [=MiniApp user agent=], under the scope of a specific MiniApp. </dd>
+
+        <dt><dfn id="dfn-widget" data-lt="widget|widgets|MiniApp widgets" data-dfn-type="dfn">MiniApp widget</dfn></dt>
+        <dd>A special type of [=MiniApp page=] that is displayed standalone in host environments such as assistants and device search pages to connect MiniApp services in specific scenarios.</dd>
+
+        <dt><dfn id="dfn-useragent" data-lt="user agents|user agent|MiniApp user agents" data-dfn-type="dfn">MiniApp user agent</dfn></dt>
+        <dd>A software application that gets, process and renders MiniApp packages, enabling execution and end-user interaction with MiniApps.</dd>
+
+        <dt><dfn id="dfn-hostenv" data-lt="host environment|host environments|MiniApp host environment" data-dfn-type="dfn">MiniApp host environments</dfn></dt>
+        <dd>
+          <span its-locale-filter-list="zh-hans" lang="zh-hans">Host environments 是 MiniApp 最终呈现界面所在的宿主，
+            在 MiniApp widget 的情况下，Host environments 与 User agent 可能不是同一个应用，
+            此时 Host environments 指包含了一个或多个 MiniApp widget 的界面，用户可以在这个界面上对 widget 进行操作，
+            User agent 指 MiniApp widget 的运行环境。</span>
+      
+          <span its-locale-filter-list="en" lang="en">The host where MiniApp finally presents the
+            interface. In the case of MiniApp widget, host environments and user agent may
+            not be the same application. At this time, host environments refers to the
+            interface containing one or more MiniApp widgets. User can operate the widget
+            on this interface. User agent refers to the running environment of MiniApp
+            widget.</span>
+        </dd>
+      </dl>
+    </section>
+  </section>
+
+    <section id='addressing'>
+    <h2>
+      <span its-locale-filter-list="en" lang="en">Addressing</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Addressing</span>
+    </h2>
+
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">与 MiniApp page 类似，定位 MiniApp widget 及 Widget 中的资源的过程符合 <a
+    href="https://w3c.github.io/miniapp-addressing/">Miniapp Addressing</a> 定义的标准。</p>
+    <p its-locale-filter-list="en" lang="en">Similar to MiniApp page, the process of locating widget and the resources in it complies with the specification defined
+      by <a href="https://w3c.github.io/miniapp-addressing/">Miniapp Addressing</a>.</p>
+
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">与 page 不同的是， MiniApp widget 并不存在 start widget。因此，指定某一个 MiniApp widget 需要显式说明 Widget 的 path，如下例所示：</p>
+    <p its-locale-filter-list="en" lang="en">Unlike MiniApp pages, there is no start widget for a MiniApp widget. Therefore, specifying a MiniApp widget needs to
+    specify the path of the widget explicitly, as shown in Example:</p>
+
+    <pre class="example" title="URI example for a MiniApp widget|MiniApp Widget的URI示例">
+      platform://miniapp/foo/widgets/index
+      platform://miniapp/foo/widgets/index?category=img
+    </pre>
+  </section>
+
+  <section id='packaging'>
+    <h2>
+      <span its-locale-filter-list="en" lang="en">Packaging</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Packaging</span>
+    </h2>
+
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">包含 Widget 的 MiniApp 包结构符合如下要求：</p>
+    <p its-locale-filter-list="en" lang="en">The structure of MiniApp package containing a Widget should meets the following requirements:</p>
+
+      <ul its-locale-filter-list="zh-hans" lang="zh-hans">
+        <li>MiniApp 的<a href="https://w3c.github.io/miniapp-packaging/#root-directory">根目录</a>可能包含widgets子目录</li>
+        <li>widgets子目录中包含了一组用于界面和逻辑的文件：
+           <ul>
+                <li>.html文件定义了 MiniApp widget 的结构和内容</li>
+                <li>.css文件定义了 MiniApp widget 的样式表</li>
+                <li>.js文件定义了 MiniApp widget 的逻辑代码</li>
+            </ul> 
+        </li>  
+      </ul>
+    
+     <ul its-locale-filter-list="en" lang="en">
+        <li>The root directory of MiniApp MAY contain the widgets subdirectory</li>
+        <li>The widgets subdirectory contains a set of files for interface and logic:
+          <ul>
+             <li>The .html file defines the structure and content of the MiniApp widget</li>
+             <li>The .css file defines the style sheet of the MiniApp widget</li>
+             <li>The .js file defines the logic of the MiniApp widget</li>
+          </ul>      
+       </li>  
+      </ul>
+  
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">典型的包含 MiniApp widget 的文件结构如下例所示：</p>
+    <p its-locale-filter-list="en" lang="en">A typical file structure containing a MiniApp widget is shown in the following example:</p>
+
+    <pre class="example" title="File structure containing a MiniApp Widget|包含了MiniApp Widget的文件结构示例">
+      /
+      |___manifest.json
+      |___app.js
+      |___app.css
+      |___pages/
+      |       |___page1.js
+      |       |___page1.html
+      |       |___page1.css
+      |___widgets/
+      |       |___widget1.js
+      |       |___widget1.html
+      |       |___widget1.css
+    </pre>
+  </section>
+
+  <section id='manifest'>
+    <h2>
+      <span its-locale-filter-list="en" lang="en">Manifest</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Manifest</span>
+    </h2>
+
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">与 MiniApp page 类似， MiniApp widget 相关的 metadata 也在 manifest.json 文件中定义，符合<a href="https://w3c.github.io/miniapp-manifest/">Miniapp Manifest</a>标准规范。</p>
+    <p its-locale-filter-list="en" lang="en">Similar to the MiniApp page, the metadata related to the MiniApp widget is also defined in the manifest.json file,
+      which meets to the <a href="https://w3c.github.io/miniapp-manifest/">Miniapp Manifest</a> specification.</p>
+  </section>
+
+  <section id='lifecycle'>
+    <h2>
+      <span its-locale-filter-list="en" lang="en">Widget lifecycle</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget 生命周期</span>
+    </h2>
+
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget 通常会遇到的生命周期事件包含如下6个事件，
+      大部分与<a href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-events">MiniApp page</a>的生命周期事件一致，</p>
+    <p its-locale-filter-list="en" lang="en">The lifecycle events that MiniApp widgets usually encounter include the following six events, 
+      most of which are consistent with the lifecycle events of the MiniApp page:</p>
+    <ul>
+      <li>MiniApp widget loading</li>
+      <li>MiniApp widget update</li>
+      <li>MiniApp widget first render ready</li>
+      <li>MiniApp widget running in foreground</li>
+      <li>MiniApp widget running in background</li>
+      <li>MiniApp widget unloading</li>
+    </ul>
+
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget 沿用 MiniApp page的<a href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a>
+      和<a href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks"> 生命周期接口及回调</a>，
+      MiniApp widget 增加了 update 生命周期事件，具体描述在 5.4 MiniApp widget 更新过程处理。</p>
+    <p its-locale-filter-list="en" lang="en">MiniApp widget follows the <a href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a>
+    and <a href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks">lifecycle
+    interfaces and callbacks</a> of MiniApp page. The MiniApp widget adds the update lifecycle event, which is described in 5.4.</p>
+
+    <section id='loading-process'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en"> Miniapp widget loading process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget加载过程</span>
+      </h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 加载 MiniApp widget 并显示的过程如下：</p>
+      <p its-locale-filter-list="en" lang="en">The process of loading and displaying MiniApp widget by User agent is as follows: </p>
+
+      <ol its-locale-filter-list="zh-hans" lang="zh-hans">
+        <li>根据<a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a>规范解析 URI，获取id、version、path、query和fragment等字段</li>
+        <li>根据 id 和 version 判断是否需要从服务器获取 MiniApp 包，如果本地不存在 MiniApp 包或者需要更新，user agent 会从服务器下载，
+          并按照 <a href="https://w3c.github.io/miniapp-packaging">MiniApp Packaging</a> 规范解析和安装 MiniApp 包</li>
+        <li>根据 <a href="https://w3c.github.io/miniapp-manifest">MiniApp manifest</a> 规范解析manifest 文件，获取其中 widgets 字段</li>
+        <li>根据 URI 的 path 字段获取 widgets 对应的min_code、path </li>
+        <li>判断 widgets 的 min_code 是否小于等于当前 user agent 支持 MiniApp 标准的版本，如果否，则返回错误</li>
+        <li>创建执行引擎 Logic Layer 和渲染引擎 View Layer 。同时按照输入数据，指定 Widget 所在窗口的属性</li>
+        <li> Logic Layer 和 View Layer 同时开始加载 widgets[path] 对应的文件，并进行初始化，加载完文件后触发 MiniApp widget loading，并建立两个 Layer 之间的通信通道</li>
+        <li>通信通道建立完成后，Logic Layer 发送初始数据到 View Layer，开始 first render</li>
+        <li> View Layer 完成 first render 之后，触发 MiniApp widget first render ready 事件</li>
+        <li>当界面显示出来时，触发 MiniApp widget running in foreground 事件</li>
+      </ol>
+
+      <ol its-locale-filter-list="en" lang="en">
+        <li>Parse the URI according to the <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a>
+          specification to obtain fields such as id, version, path, query and fragment.</li>
+        <li>Determine whether the MiniApp package needs to be obtained from the server according to the id and version. If the
+          MiniApp package does not exist locally or needs to be updated, user agent will download it from the server, and parse and
+          install the MiniApp package according to the  <a href="https://w3c.github.io/miniapp-packaging">MiniApp Packaging</a> specification.
+        </li>
+        <li>Parse the manifest file according to the <a href="https://w3c.github.io/miniapp-manifest">MiniApp manifest</a>
+          specification and get the widgets fields.</li>
+        <li>Obtain the corresponding min_code and path fields of the widgets according to the path field of the URI.</li>
+        <li>Determine whether the min_code of widgets is less than or equal to the version of MiniApp standard the current
+          user agent supports. If not, return an error.</li>
+        <li>Create the execution engine Logic Layer and the rendering engine View Layer. At the same time, according to the
+          input data, specify the properties of the window where the widget is located.</li>
+        <li>Logic Layer and View Layer start to load the files corresponding to widgets[path] simultaneously and initialize
+          it. After loading the file, MiniApp widget loading is triggered, and a communication channel between the two Layers is
+          established.</li>
+        <li>After the communication channel is established, the Logic Layer sends the initial data to the View Layer and
+          starts the first render.</li>
+        <li>After the View Layer completes the first render, trigger the MiniApp widget first render ready event.</li>
+        <li>When the interface is displayed, trigger the MiniApp widget running in foreground event.</li>
+      </ol>
+    </section>  
+
+    <section id='unloading-process'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp widget unloading process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget unloading过程</span>
+      </h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 将 Widget 从界面移除并不再使用的情况下，会触发关闭过程:</p>
+      <p its-locale-filter-list="en" lang="en">When user agent removes the widget from the interface and is no longer using it, it will trigger the unloading process:</p>
+
+      <ol its-locale-filter-list="zh-hans" lang="zh-hans">
+        <li>触发 MiniApp widget running in background 事件</li>
+        <li>User agent 关闭 Widget 所在窗口和渲染引擎 View Layer </li>
+        <li>触发 MiniApp widget unloading 事件</li>
+        <li>User agent 关闭执行引擎 Logic Layer</li>
+      </ol>
+    
+      <ol its-locale-filter-list="en" lang="en">
+        <li> Trigger MiniApp widget running in background event</p>
+        <li> The user agent closes the window where the widget is located and the rendering engine View Layer</p>
+        <li> Trigger the MiniApp widget unloading event</p>
+        <li> The user agent closes the execution engine Logic Layer</p>
+      </ol>
+    
+    </section>
+
+    <section id='foreground-background-process'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp widget switch between foreground and background process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget在前台和后台见切换过程</span>  
+      </h3>
+    
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget 相比于 MiniApp page ，会因为更多的原因不可见，这时 MiniApp widget 的
+        running in background 事件会被触发，例如：</p>
+      <p its-locale-filter-list="en" lang="en">Compared with MiniApp page, MiniApp widget will be invisible for more
+        reasons. The the running in background event of MiniApp widget will be triggered, for example: </p>
+    
+      <ol its-locale-filter-list="zh-hans" lang="zh-hans">
+        <li> widget 被用户移出可见区域</li>
+        <li> widget 被折叠</p>
+        <li> widget 被其他 Widget 完全覆盖</li>
+        <li> widget 所在的 [=host environment=] 进入 background </li>
+      </ol>
+    
+      <ol its-locale-filter-list="en" lang="en">
+        <li>The widget is moved out of the visible area by user </li>    
+        <li>Widget is collapsed </li>    
+        <li>Widget is completely covered by other widget </li>    
+        <li>The [=host environment=] where the widget is located enters the background </li>
+      </ol>
+        
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">当 MiniApp widget 重新可见时，running in foreground 事件会被触发。</p>    
+      <p its-locale-filter-list="en" lang="en">The running in foreground event would be triggered when MiniApp widget becomes visible again.</span></p>
+    </section>
+
+    <section id='update-process'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp widget update process</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget更新过程</span>   
+      </h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">User agent 可以在不重新创建 Widget 环境的情况下更新 widget 的内容，这种情况常应用于 Widget 的 Host environment 与 Widget 有强交互的情况，
+        例如，在商品搜索结果页显示一个商品 widget 时，用户点击另一个商品，该 Widget 的内容将被更新为新商品的。</p>
+      <p its-locale-filter-list="en" lang="en">User agent can update the content of the
+        widget without recreating the widget environment. This often happens where the
+        widget host environment has strong interaction with the widget. For example,
+        when a product widget is displayed on search resualts page, user clicks on
+        another product, the content of the widget will be updated with the infomation of
+        the new product.</p>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">在这种场景下，处理过程如下：</p>
+      <p its-locale-filter-list="en" lang="en">In this scenario, the process is as follows:</p>
+
+      <ol its-locale-filter-list="zh-hans" lang="zh-hans">
+        <li>Host environment 将符合 <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a> 规范的 URI发给 User agent</li>
+        <li>User agent 识别该 URI 是否为已经打开的 Widget，如果不是，则触发新的 loading 过程</li>
+        <li>如果是已经打开的实例，则 User agent 会将该 URI 发送给该实例</li>
+        <li>如果此时 MiniApp widget 处于 foreground 状态， MiniApp widget update 事件会被触发</li>
+        <li>如果此时 MiniApp widget 处于 background 状态， MiniApp widget update 事件会在下次 MiniApp widget 再次可见时触发，此时 running in foreground
+          事件会先于 update 事件触发</li>
+        <li>Widget 的 logic Layer 在接受到 update 事件时可以获取新 URI 中的 qurey，进行逻辑处理之后（例如使用 query 中的字段查询服务器上的内容）更新界面</li>
+      </ol>
+
+      <ol its-locale-filter-list="en" lang="en">
+        <li>The Host environment sends a URI that conforms to the
+          <a href="https://w3c.github.io/miniapp-addressing/">MiniApp Addressing</a>specification to the user agent</li>
+        <li>User agent identifies whether the URI is an already opened widget. If not, it triggers a new loading process</li>
+        <li>If it is an already opened instance, user agent will send the URI to this instance</li>
+        <li>If the MiniApp widget is in the foreground state at this time, the MiniApp widget update event will be triggered</li>
+        <li>If the MiniApp widget is in the background state at this time, the MiniApp widget update event will be triggered
+          the next time the MiniApp widget is visible again, and the running in foreground event will be triggered before the update event </li>
+        <li>The Logic Layer of the widget can obtain the query in the new URI when receiving the update event, and update the interface after logic processing (for example, using the fields in the query to inquire about the content on the server)</li>
+      </ol>
+    </section>
+    <section id='lifecycle-interface-and-callbacks'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">MiniApp Widget lifecycle interface and callbacks</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget生命周期接口和回调</span>
+      </h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget的loading、first render ready、running in foreground、running in background、unloading事件与page一致，因此对应的生命周期的接口与回调也与沿用了MiniApp page的<a href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a>和<a href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks">生命周期接口及回调</a>。</p>
+      <p its-locale-filter-list="en" lang="en">The loading, first render ready, running in foreground, running in background and unloading events of the MiniApp widget are consistent with the page. So the corresponding lifecycle interfaces and callbacks also follow the <a href="https://w3c.github.io/miniapp-lifecycle/#pagestate-enum">PageState enum</a> and <a href="https://w3c.github.io/miniapp-lifecycle/#miniapp-page-lifecycle-interface-and-callbacks">lifecycle interfaces and callbacks</a> of the MiniApp page.</p>
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp的update事件并不会触发页面状态的变化，页面仍然会保留在'shown'状态。该事件发生时，会触发onupdate回调。</p>
+      <p its-locale-filter-list="en" lang="en">The update event of MiniApp does not trigger the change of the page state, the page will remain in the 'shown' state. When this event occurs, the onupdate callback is triggered.</p>
+ 
+      <pre class="idl">
+        partial interface Page {
+        attribute EventHandler onupdate;
+        };
+      </pre>
+ 
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">示例如下：</p>
+      <p its-locale-filter-list="en" lang="en">An example is as follows:</p>
+
+      <pre class="example js" title="register update event on MiniApp Widget|在Widget上注册update事件">
+        const doUpdate = (event) => {
+          // extract query from URI
+          // get new data
+          // update interface
+        };
+
+        page.addEventListener('update', doUpdate);
+        page.onupdate = doUpdate;
+      </pre>
+    
+    </section>
+  </section>
+
+  <section id='hostenv'>
+    <h2>
+      <span its-locale-filter-list="en" lang="en">MiniApp widget obtains [=host environment=] information</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget获取宿主环境信息</span>
+    </h2>
+
+    <section id="window-size">
+      <h3>Widget obtains windows size</h3>
+    
+      <p its-locale-filter-list="zh-hans" lang="zh-hans"> widget 可以获取窗口大小，方便应用做对应布局。在 MiniApp 中，通过 `window.screen` 可以获取
+        screen信息。</p>
+      <p its-locale-filter-list="en" lang="en"> The widget can get window size. This is convenient for widget to layout
+        correspondingly. In MiniApp, screen information
+        can be obtained through `window.screen`.</p>
+    
+      <pre class="JavaScript">
+          // window.screen
+          {
+            width:1920,
+            height:1080
+          }
+        </pre>
+    
+      <p its-locale-filter-list="zh-hans" lang="zh-hans"> Widget 也可以通过注册回调函数，在窗口大小发生变化时被触发</p>
+      <p its-locale-filter-list="en" lang="en">Widgets can also be triggered when the window size changes by registering a
+        callback function.</p>
+    
+      <pre class="JavaScript">
+          window.addEventListener('resize', e=&gt;{console.log(e)})
+          window.onresize = function(e){}
+      </pre>
+    
+    </section>
+
+    <section id="hostenv-style">
+      <h3>Widget obtains host environment style</h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">宿主可能需要给所有在其中打开的 MiniApp Widget 定义统一的样式风格，例如矩形边框统一使用圆角等。</p>    
+      <p its-locale-filter-list="en" lang="en">The host may need to define a uniform style for all MiniApp Widgets opened in it, such as uniform use of rounded
+        corners for rectangular borders, etc.</p>
+    </section>
+  </section>
+
+  <section id='communication'>
+    <h2>
+      <span its-locale-filter-list="en" lang="en">Data communication between MiniApp widget and MiniApp</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp widget和MinApp之间通信</span>
+    </h2>
+
+    <p>在一定情况下，Widget 需要与 MiniApp 保持一定的数据通信，例如：</p>
+    <p>Under certain circumstances, widget needs to maintain certain data communication with MiniApp, for example: </p>
+
+    <ul its-locale-filter-list="zh-hans" lang="zh-hans">
+      <li>在 MiniApp 中已经登录，在 Widget 保持同一登录状态</li>
+      <li>MiniApp 播放音乐，Widget 获取播放状态以显示播放控件</li>
+    </ul>
+
+    <ul its-locale-filter-list="en" lang="en">
+      <li>Keeping the same login in state in widget when already logged in in MiniApp. </li>
+      <li>Widget gets playback status and display playback control when MiniApp is playing music. </li>
+    </ul>
+
+    <section id='open-page'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Widget opens MiniApp page and pass parameters</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget打开MiniApp页面并传递参数和MinApp之间通信</span>  
+      </h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">在 MiniApp widget 中可通过 open API 打开 MiniApp 中的页面，并通过符合<a href="https://w3c.github.io/miniapp-addressing/">Miniapp Addressing</a> 标准的 URI 传递数据到被打开的页面。</p>
+      <p its-locale-filter-list="en" lang="en">In MiniApp widget, the MiniApp page can be opened through the open API, and data is passed to the opened page through the
+        URI that conforms to the <a href="https://w3c.github.io/miniapp-addressing/">Miniapp Addressing</a> standard. </p>
+
+      <pre class="example js">
+        window.open('platform://miniapp/foo/pages/detail?index=100')
+      </pre>
+    </section>
+
+    <section id='local-data'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Widget and the same MiniApp visit the same locally stored data</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一本地保存的数据</span>
+      </h3>
+
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面都可以通过user agent读写在本地保存的数据，没有过期时间。MiniApp Widget和MiniApp可以通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口来访问这些数据。对于同一个<a href="https://www.w3.org/TR/miniapp-manifest/#dfn-app_id">app_id</a>的Widget和MiniApp，通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口可以访问到相同的数据，示例如下：</p>
+      <p its-locale-filter-list="en" lang="en">Both MiniApp Widget and MiniApp pages can read and write locally stored data through user agent with no expiration time. MiniApp Widget and MiniApp can access this data through <a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a> interface. For widgets and MiniApps of the same <a href="https://www.w3.org/TR/miniapp-manifest/#dfn-app_id">app_id</a>, the same data can be accessed through the <a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a> interface, as follows:</p>
+      
+	    <pre class="example js" title="access data with localStorage | 通过localStorage接口访问数据">
+          // Create a localStorage name/value pair with name="lastname" and value="Smith"
+          localStorage.setItem("lastname", "Smith");
+          // or
+          localStorage.lastname = "Smith";
+          // Remove the "lastname" localStorage item
+          localStorage.removeItem("lastname");
+          // Retrieve the value of "lastname" and use it
+          const name = localStorage.lastname;
+          // or
+          const name = localStorage.getItem("lastname");
+        </pre>  
+    </section>
+
+    <section id='local-file'>
+      <h3>
+      <span its-locale-filter-list="en" lang="en">Widget and the same MiniApp visit the same file</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一文件</span>
+      </h3>
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面可以创建和访问存储在user agent中的用户本地文件，也可以访问应用安装包中的资源文件。</p>
+        <p its-locale-filter-list="en" lang="en">MiniApp Widget and MiniApp page can create and access user local files stored in the user agent, and can also access resource files in the application package.</p>
+
+<p its-locale-filter-list="zh-hans" lang="zh-hans">通常MiniApp Widget可以创建和访问几类文件：</p>
+	<ul its-locale-filter-list="zh-hans" lang="zh-hans">
+		<li>通过URL描述的在线文件，例如image组件显示在线图片，通常以标准的http/https scheme定义</li>
+		<li>在MiniApp安装包中的资源文件，例如MiniApp安装包中的图片资源</li>
+		<li>存储在user agent中当前MiniApp data目录下的本地文件，这些文件通常是通过MiniApp API产生的，仅能有当前MiniApp访问。例如从服务器上下载或者由用户创建的文件</li>
+	</ul>
+
+    <ul its-locale-filter-list="en" lang="en">
+		<li>Online files described by URL, such as image components that display online images, usually defined in standard http/https schemes</li>
+		<li>Resource files in the MiniApp installation package, such as image resources</li>
+		<li>Local files stored in the current MiniApp data directory in the user agent, usually generated through the MiniApp API and accessible only to the current MiniApp. For example, files downloaded from a server or created by a user</li>	
+	</ul>
+	
+	<p its-locale-filter-list="zh-hans" lang="zh-hans">针对不同类型的文件，可以采用多种URL形式来指定。</p>
+        <p its-locale-filter-list="en" lang="en">For different types of files, multiple URL forms cpuld be used.</p>
+	
+      <section id='url'>
+        <h4>
+        <span its-locale-filter-list="en" lang="en">URL for addressing resource files in MiniApp package</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp安装包中资源文件的URL</span>
+        </h4>
+        
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp 包中包含的资源文件可以通过<a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a>规范定义的URL scheme进行定位。</p>
+        <p its-locale-filter-list="en" lang="en">Resource files contained in a MiniApp package can be located through the URL scheme defined by the <a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a> specification.</p>
+    
+		<pre class="example js" title="Example: MiniApp addressing形式访问应用安装包资源文件">
+          platform://miniapp/foo/common/example.png
+        </pre>  
+
+	     <p its-locale-filter-list="zh-hans" lang="zh-hans">类似于<a href="https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2">HTML relative URL</a>，MiniApp包中的资源也可以通过相对路径形式进行定位：</p>
+        <p its-locale-filter-list="en" lang="en">Similar to <a href="https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2">HTML relative URL</a>, resources in a MiniApp package can also be located as relative paths:</p>
+		
+		<pre class="example js" title="Example: 访问应用安装包资源文件的URI，绝对和相对路径形式">
+        // For widget platform://miniapp/foo/widgets/index
+		common/example.png // complete URL：platform://miniapp/foo/widgets/common/example.png
+		../common/example.png // complete URL：URL：platform://miniapp/foo/common/example.png
+        </pre>  
+      </section>
+
+      <section id='local-file'>
+        <h4>
+        <span its-locale-filter-list="en" lang="en">MiniApp private local files</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp的私有本地文件</span>
+        </h4>
+
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">对每一个MiniApp，User agent 必须提供一个目录，用于存储user agent运行过程中产生的用户文件。MiniApp只可以在该目录下创建和访问文件，不能访问该目录以外的文件。MiniApp可以通过internal: URL访问私有文件。internal: URL 语法定义如下：
+</p>
+        <p its-locale-filter-list="en" lang="en">For each MiniApp, the user agent must provide a directory to store the user files generated during the operation of the user agent. MiniApp can only create and access files in that directory, not files outside of that directory. MiniApp can access private files via internal: URL. Internal: URL syntax is defined as follows:
+</p>
+          
+        <pre class="example js" title="">
+			internaluri   = uri-prefix path-abempty
+			uri-prefix    = "internal://"
+        </pre> 
+      
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">以下是internal: URL的示例：</p>
+        <p its-locale-filter-list="en" lang="en">An example of an internal: URL:</p>
+		
+		<pre class="example js" title="Example: 访问用户本地文件URL">
+			internal://path/to/file
+        </pre> 
+      </section>
+
+      <section id='file-ui'>
+        <h4>
+        <span its-locale-filter-list="en" lang="en">File access in UI components & APIs</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">通过UI组件和API访问文件</span>
+        </h4>
+		
+        <p its-locale-filter-list="zh-hans" lang="zh-hans">一些MiniApp Widget 的 UI components和API 可以通过属性和参数对文件进行访问，例如image 组件的的 src 属性：</p>
+        <p its-locale-filter-list="en" lang="en">UI components and API of some MiniApp widget can access files through properties and parameters, such as the src property of the image component:</p>
+		
+		 <pre class="example xml" title="Example: example of src attribute | src 属性示例">
+			&lt;image src="platform://miniapp/foo/common/example.png" /&gt;
+        </pre> 
+      </section>
+
+      <section id='file-ui'>
+        <h4>
+        <span its-locale-filter-list="en" lang="en">Access file with File API</span>
+        <span its-locale-filter-list="zh-hans" lang="zh-hans">通过文件API访问文件</span>
+        </h4>
+
+	        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp可以通过 [[FileAPI]] 访问本地文件。</p>
+        <p its-locale-filter-list="en" lang="en">Access local files via [[FileAPI]]:</p>
+        <pre class="example js" title="access file with File API | 通过File API访问文件">
+         // 读取本地文件Read local file
+          const file = new File([], "internal://files/foo.txt", {
+            type: "text/plain",
+          });
+          const reader = new FileReader();
+          reader.onload = () => {
+              console.log(reader.result);
+          };
+          reader.readAsText(file);
+        </pre> 		
+      </section>
+	      </section>
+	      </section>
+
+		
+
+  <section id="security">
+    <h2>
+     <span its-locale-filter-list="en" lang="en">Security considerations</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">安全考虑</span>  
+      </h2>
+	    <p its-locale-filter-list="zh-hans" lang="zh-hans">由于widget的packaging、addressing和manifest与MiniApp page类似，因此widget的安全考虑宜参考MiniApp <a href="https://www.w3.org/TR/miniapp-packaging/#sec-security">Packaging</a>、<a href="https://www.w3.org/TR/miniapp-addressing/#security-considerations">Addressing</a>和<a href="https://www.w3.org/TR/miniapp-manifest/#security-considerations">Manifest</a>中的安全考虑。此外：</p>
+    <p its-locale-filter-list="en" lang="en">Since the packaging, addressing, and manifest of widgets are similar to MiniApp pages, the security considerations of widgets should refer to the security considerations in MiniApp <a href="https://www.w3.org/TR/miniapp-packaging/#sec-security">Packaging</a>, <a href="https://www.w3.org/TR/miniapp-addressing/#security-considerations">Addressing</a>, and <a href="https://www.w3.org/TR/miniapp-manifest/#security-considerations">Manifest</a>. Furthermore:</p>
+      <ul its-locale-filter-list="zh-hans" lang="zh-hans">
+		<li>由于MiniApp widget的界面显示在Host Environment中，user agent应该保障Host Environment和MiniApp widget的数据隔离</li>
+		<li>由于MiniApp widget可以访问MiniApp的本地数据，user agents应该确保控制MiniApp Widget可访问的文件范围</li>
+	</ul>
+
+     <ul its-locale-filter-list="en" lang="en">
+		<li>Since the interface of the MiniApp widget is displayed in the Host Environment, the user agent should ensure data isolation between the Host Environment and the MiniApp widget.</li>
+		<li>Since the MiniApp widget has access to MiniApp's local data, user agents should ensure control over the range of files that the MiniApp widget can access.</li>
+	</ul>	  
+  </section>
+
+  <section id="privacy">
+    <h2>
+     <span its-locale-filter-list="en" lang="en">Privacy considerations</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">隐私考虑</span>  
+	       </h2>
+
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">由于widget的packaging、addressing和manifest与 MiniApp page 类似，因此widget的隐私考虑宜参考MiniApp packaging、addressing和manifest中的隐私考虑。</p>
+    <p its-locale-filter-list="en" lang="en">Since the packaging, addressing, and manifest of widgets are similar to MiniApp pages, the privacy considerations of widgets should refer to the privacy considerations in MiniApp packaging, addressing and manifest.</p>
+
+  </section>
+
+  <section class="appendix" id="conformance">
+    <p its-locale-filter-list="zh-hans" lang="zh-hans">本规范中的所有内容均为本草案的规范性内容，但明确标记为“非规范性”的部分、示例和注释除外。</p>
+    <p its-locale-filter-list="en" lang="en">As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this
+      specification are non-normative. Everything else in this specification is normative.</p>
+  </section>
+
+  <section class="appendix" id="references">
+    <h2>
+      <span its-locale-filter-list="en" lang="en">References</span>
+      <span its-locale-filter-list="zh-hans" lang="zh-hans">参考</span>
+    </h2>
+    <ol>
+      <li><a href="https://www.w3.org/TR/widgets-reqs/">Requirement For Standardizing Widgets</a></li>
+      <li><a href="https://lists.w3.org/Archives/Public/public-webapps/2018OctDec/0011.html">Widget related Recommendations are W3C Obsolete Recommendations</a></li>
+      <li><a href="https://w3c.github.io/miniapp/">MiniApp Specifications</a></li>
+      <li><a href="https://www.w3.org/TR/miniapp-manifest/">MiniApp Manifest</a></li>
+      <li><a href="https://www.w3.org/TR/miniapp-addressing/">MiniApp Addressing</a></li>
+      <li><a href="https://www.w3.org/TR/miniapp-lifecycle/">MiniApp Lifecycle</a></li>
+      <li><a href="https://www.w3.org/TR/miniapp-packaging/">MiniApp Packaging</a></li>
+      <li><a href="https://www.w3.org/TR/FileAPI/">W3C File API</a></li>
+      <li><a href="https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2">W3C HTML and URLs</a></li>
+      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">HTML Storage Interface</a></li>
+    </ol>
+  </section>
+
+</body>
+</html>
