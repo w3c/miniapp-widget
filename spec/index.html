@@ -499,7 +499,7 @@
       <span its-locale-filter-list="zh-hans" lang="zh-hans">Widget和同一MiniApp访问同一本地保存的数据</span>
       </h3>
 
-      <p its-locale-filter-list="zh-hans" lang="zh-hans">iniApp Widget和MiniApp页面都可以通过user agent读写在本地保存的数据，没有过期时间。MiniApp Widget和MiniApp可以通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口来访问这些数据。对于同一个<a href="https://www.w3.org/TR/miniapp-manifest/#dfn-app_id">app_id</a>的Widget和MiniApp，通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口可以访问到相同的数据，示例如下：</p>
+      <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp Widget和MiniApp页面都可以通过user agent读写在本地保存的数据，没有过期时间。MiniApp Widget和MiniApp可以通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口来访问这些数据。对于同一个<a href="https://www.w3.org/TR/miniapp-manifest/#dfn-app_id">app_id</a>的Widget和MiniApp，通过<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a>接口可以访问到相同的数据，示例如下：</p>
       <p its-locale-filter-list="en" lang="en">Both MiniApp Widget and MiniApp pages can read and write locally stored data through user agent with no expiration time. MiniApp Widget and MiniApp can access this data through <a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a> interface. For widgets and MiniApps of the same <a href="https://www.w3.org/TR/miniapp-manifest/#dfn-app_id">app_id</a>, the same data can be accessed through the <a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">window.localStorage</a> interface, as follows:</p>
       
 	    <pre class="example js" title="access data with localStorage | 通过localStorage接口访问数据">
@@ -571,7 +571,7 @@
 
         <p its-locale-filter-list="zh-hans" lang="zh-hans">对每一个MiniApp，User agent 必须提供一个目录，用于存储user agent运行过程中产生的用户文件。MiniApp只可以在该目录下创建和访问文件，不能访问该目录以外的文件。MiniApp可以通过internal: URL访问私有文件。internal: URL 语法定义如下：
 </p>
-        <p its-locale-filter-list="en" lang="en">For each MiniApp, the User agent must provide a directory to store the user files generated during the operation of the user agent. MiniApp can only create and access files in that directory, not files outside of that directory. MiniApp can access private files via internal: URL.Internal: URL syntax is defined as follows:
+        <p its-locale-filter-list="en" lang="en">For each MiniApp, the user agent must provide a directory to store the user files generated during the operation of the user agent. MiniApp can only create and access files in that directory, not files outside of that directory. MiniApp can access private files via internal: URL. Internal: URL syntax is defined as follows:
 </p>
           
         <pre class="example js" title="">
@@ -596,8 +596,8 @@
         <p its-locale-filter-list="zh-hans" lang="zh-hans">一些MiniApp Widget 的 UI components和API 可以通过属性和参数对文件进行访问，例如image 组件的的 src 属性：</p>
         <p its-locale-filter-list="en" lang="en">UI components and API of some MiniApp widget can access files through properties and parameters, such as the src property of the image component:</p>
 		
-		 <pre class="example js" title="Example: example of src attribute | src 属性示例">
-			<image src="platform://miniapp/foo/common/example.png" />
+		 <pre class="example xml" title="Example: example of src attribute | src 属性示例">
+			&lt;image src="platform://miniapp/foo/common/example.png" /&gt;
         </pre> 
       </section>
 
@@ -607,8 +607,8 @@
         <span its-locale-filter-list="zh-hans" lang="zh-hans">通过文件API访问文件</span>
         </h4>
 
-	        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp可以通过 <a href="https://www.w3.org/TR/FileAPI/">File API</a>访问本地文件。</p>
-        <p its-locale-filter-list="en" lang="en">Access local files via the <a href="https://www.w3.org/TR/FileAPI/">File API</a>:</p>
+	        <p its-locale-filter-list="zh-hans" lang="zh-hans">MiniApp可以通过 [[FileAPI]] 访问本地文件。</p>
+        <p its-locale-filter-list="en" lang="en">Access local files via [[FileAPI]]:</p>
         <pre class="example js" title="access file with File API | 通过File API访问文件">
          // 读取本地文件Read local file
           const file = new File([], "internal://files/foo.txt", {
@@ -631,8 +631,8 @@
      <span its-locale-filter-list="en" lang="en">Security considerations</span>
       <span its-locale-filter-list="zh-hans" lang="zh-hans">安全考虑</span>  
       </h2>
-	    <p its-locale-filter-list="zh-hans" lang="zh-hans">由于widget的packaging、addressing和manifest与MiniApp page类似，因此widget的安全考虑宜参考MiniApp packaging、addressing和manifest中的安全考虑。此外：</p>
-    <p its-locale-filter-list="en" lang="en">Since the packaging, addressing, and manifest of widgets are similar to MiniApp pages, the security considerations of widgets should refer to the security considerations in MiniApp packaging, addressing, and manifest. Furthermore:</p>
+	    <p its-locale-filter-list="zh-hans" lang="zh-hans">由于widget的packaging、addressing和manifest与MiniApp page类似，因此widget的安全考虑宜参考MiniApp <a href="https://www.w3.org/TR/miniapp-packaging/#sec-security">Packaging</a>、<a href="https://www.w3.org/TR/miniapp-addressing/#security-considerations">Addressing</a>和<a href="https://www.w3.org/TR/miniapp-manifest/#security-considerations">Manifest</a>中的安全考虑。此外：</p>
+    <p its-locale-filter-list="en" lang="en">Since the packaging, addressing, and manifest of widgets are similar to MiniApp pages, the security considerations of widgets should refer to the security considerations in MiniApp <a href="https://www.w3.org/TR/miniapp-packaging/#sec-security">Packaging</a>, <a href="https://www.w3.org/TR/miniapp-addressing/#security-considerations">Addressing</a>, and <a href="https://www.w3.org/TR/miniapp-manifest/#security-considerations">Manifest</a>. Furthermore:</p>
       <ul its-locale-filter-list="zh-hans" lang="zh-hans">
 		<li>由于MiniApp widget的界面显示在Host Environment中，user agent应该保障Host Environment和MiniApp widget的数据隔离</li>
 		<li>由于MiniApp widget可以访问MiniApp的本地数据，user agents应该确保控制MiniApp Widget可访问的文件范围</li>
